@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 
-function Logout({isLoggedIn, setIsLoggedIn}) {
+function SignOut({isLoggedIn, setIsLoggedIn}) {
 
   const navigate = useNavigate()
 
@@ -15,7 +15,7 @@ function Logout({isLoggedIn, setIsLoggedIn}) {
     axios.defaults.withCredentials = true;
   
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/logout");
+      const response = await axios.post("http://localhost:5000/api/auth/signout");
   
       if (response.data) {
         localStorage.clear()
@@ -53,4 +53,4 @@ function Logout({isLoggedIn, setIsLoggedIn}) {
   )
 }
 
-export default Logout
+export default SignOut

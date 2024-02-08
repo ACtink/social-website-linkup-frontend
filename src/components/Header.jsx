@@ -6,7 +6,7 @@ function Header({ isLoggedIn }) {
   console.log(isLoggedIn);
 
   return (
-    <div className="h-20 bg-violet-500 mb-10 flex justify-between items-center ">
+    <div className="h-20 bg-violet-500  flex justify-between items-center ">
       <div className="ml-6">
         <Link to={"/"}>
           <h1 className="text-white">Twitter App</h1>
@@ -15,13 +15,8 @@ function Header({ isLoggedIn }) {
 
       <div className="header-buttons space-x-2">
         {!isLoggedIn && (
-          <Link to={"/register"}>
-            <button className="text-white">Register</button>
-          </Link>
-        )}
-        {!isLoggedIn && (
-          <Link to={"/login"}>
-            <button className="text-white">Login</button>
+          <Link to={"/signin"}>
+            <button className="text-white">Sign In</button>
           </Link>
         )}
         <Link to={"/allposts"}>
@@ -38,8 +33,13 @@ function Header({ isLoggedIn }) {
           </Link>
         )}
         {isLoggedIn && (
-          <Link to={"/logout"}>
-            <button className="text-white">Logout</button>
+          <Link to={"/signout"}>
+            <button className="text-white">Sign Out</button>
+          </Link>
+        )}
+        {!isLoggedIn && (
+          <Link to={"/signup"}>
+            <button className="text-white">Sign Up</button>
           </Link>
         )}
       </div>

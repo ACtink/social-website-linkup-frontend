@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import RenderPosts from "./RenderPosts";
+import LeftSide from "./LeftSide";
+import RightSide from "./RightSide";
 
 function AllPosts() {
   const [allPosts, setAllPosts] = useState(null);
@@ -28,21 +31,11 @@ function AllPosts() {
 
   return (
     <div>
-      <h1>All Tweets</h1>
+      <LeftSide />
 
-      <h1>{error && error}</h1>
-      <div className="overflow-scroll py-4">
-        {allPosts &&
-          allPosts.map((post, indx) => {
-            return (
-              <div key={indx} className="h-4  my-2 mx-auto ">
-                <h2 className="text-yellow-300 text-2xl h-10 text-center max-w-96 bg-green-500 mx-auto rounded-3xl my-12">
-                  {post.postbody}
-                </h2>
-              </div>
-            );
-          })}
-      </div>
+      <RenderPosts posts={allPosts} setPosts={setAllPosts} error={error} />
+      
+      <RightSide />
     </div>
   );
 }
