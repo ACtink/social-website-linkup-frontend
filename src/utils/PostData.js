@@ -16,9 +16,35 @@ export async function postData(url, data){
 
 
     
-     const response =  await axios.post(url, JSON.stringify(data), {
+     const response =  await axios.post(url, data, {
         headers: {
             'Content-Type': 'application/json', 
+        },
+    })
+
+    return response
+
+
+
+
+
+  
+
+}
+
+
+
+export async function postFormData(url, data){
+   
+    axios.defaults.withCredentials = true;
+
+
+
+
+    
+     const response =  await axios.post(url, data, {
+        headers: {
+            'Content-Type': 'multipart/form-data', 
         },
     })
 

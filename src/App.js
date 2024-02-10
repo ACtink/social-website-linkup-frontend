@@ -12,6 +12,7 @@ import Profile from './components/Profile';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import SignOut from './components/SignOut';
+import ResponsiveAppBar from './components/ResponsiveAppBar';
 
 
 function App() {
@@ -23,7 +24,8 @@ function App() {
   return (
     <div className='App'>
       <Router>
-        <Header isLoggedIn={isLoggedIn}/>
+        {/* <Header isLoggedIn={isLoggedIn}/> */}
+        <ResponsiveAppBar isLoggedIn={isLoggedIn} />
  
         <Routes >
         <Route path='/' exact element={<Home/>}/>

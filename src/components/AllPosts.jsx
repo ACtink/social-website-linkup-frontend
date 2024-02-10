@@ -3,6 +3,9 @@ import axios from "axios";
 import RenderPosts from "./RenderPosts";
 import LeftSide from "./LeftSide";
 import RightSide from "./RightSide";
+import { Box } from "@mui/material";
+import { red } from "@mui/material/colors";
+import MiddleSection from "./MiddleSection";
 
 function AllPosts() {
   const [allPosts, setAllPosts] = useState(null);
@@ -30,13 +33,15 @@ function AllPosts() {
   }, []);
 
   return (
-    <div>
+    <Box sx={{ display: { xs: "flex", md: "flex" },justifyContent:"space-between" }}>
       <LeftSide />
 
-      <RenderPosts posts={allPosts} setPosts={setAllPosts} error={error} />
-      
+      <MiddleSection posts={allPosts} setPosts={setAllPosts} error={error}/>
+
+   
+
       <RightSide />
-    </div>
+    </Box>
   );
 }
 
