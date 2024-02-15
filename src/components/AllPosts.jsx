@@ -33,16 +33,29 @@ function AllPosts() {
   }, []);
 
   return (
-    <Box sx={{ display: { xs: "flex", md: "flex" },justifyContent:"space-between" }}>
-      <LeftSide />
 
-      <MiddleSection posts={allPosts} setPosts={setAllPosts} error={error}/>
+
+
+    <Box sx={{ display: { xs: "flex", md: "flex" },alignItems:"center", flexDirection:"coloumn",justifyContent:"center" }}>
+   
+      
+      
+      
+       <LeftSide />
+      
+       <MiddleSection posts={allPosts} setPosts={setAllPosts} error={error}/>
+
+        <RightSide />
+  
+
+
+      
 
    
 
-      <RightSide />
-    </Box>
-  );
+     
+     </Box>
+  )
 }
 
 export default AllPosts;

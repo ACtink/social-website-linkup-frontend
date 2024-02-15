@@ -13,6 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
+import PublicIcon from '@mui/icons-material/Public';
 
 const settings = [
   { value: "Profile", showOnLoggedin: true },
@@ -38,9 +39,9 @@ function ResponsiveAppBar({ isLoggedIn }) {
   return (
     <AppBar position="fixed" sx={{background: "linear-gradient(-225deg, #FF3CAC 0%, #562B7C 52%, #2B86C5 100%)"}}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters  sx={{ py: 2 }}>
           <Box sx={{ display: { xs: "flex", md: "flex" }, flexGrow: 1 }}>
-            <AdbIcon sx={{ display: { xs: "flex", md: "flex" }, mr: 1 }} />
+            <PublicIcon sx={{ display: { xs: "flex", md: "flex" }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
@@ -82,9 +83,9 @@ function ResponsiveAppBar({ isLoggedIn }) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {isLoggedIn && settings.map((setting) => (
+              {isLoggedIn && settings.map((setting, indx) => (
 
-                 setting.showOnLoggedin && <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                 setting.showOnLoggedin && <MenuItem key={indx} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">
                     {isLoggedIn && setting.showOnLoggedin && (
                       <Link to={`/${setting.value.toLowerCase()}`}>
@@ -98,8 +99,8 @@ function ResponsiveAppBar({ isLoggedIn }) {
 
               ))}
 
-              {!isLoggedIn && settings.map((setting) => (
-              !setting.showOnLoggedin  && <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              {!isLoggedIn && settings.map((setting, indx) => (
+              !setting.showOnLoggedin  && <MenuItem key={indx} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">
                     {!isLoggedIn && !setting.showOnLoggedin && (
                       <Link to={`/${setting.value.toLowerCase()}`}>

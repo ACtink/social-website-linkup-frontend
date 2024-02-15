@@ -9,13 +9,35 @@ function RightSide() {
         display: { xs: "none", md: "flex" },
         flexGrow: 1,
         position: "fixed",
+        top:"0",
+        right:"0",
         height: "100%",
         width: "25%",
-        background: "linear-gradient(to top, #09203f 0%, #537895 100%)",
-        right: 0,
+       
+        border:"4px",
+  
+  
+
+        
+        
       }}
     >
-      RightSide
+
+
+<Box sx={{color:"white"}}>
+
+        <div style={{marginTop:"200px"}}>
+        <h1 style={{color:"orange"}}>this is in the left of the screen</h1>
+
+        <a href="/signout">signout</a>
+
+
+        </div>
+
+      </Box>
+
+      
+
     </Box>
   );
 }

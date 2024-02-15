@@ -32,8 +32,8 @@ function App() {
           <Route path='/signin' element={<SignIn isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}/>
           <Route path='/signout' element={<SignOut isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}/>
           <Route path="/allposts" element={<AllPosts/>}/>
-          <Route path="/newpost" element={<NewPost isLoggedIn={isLoggedIn}/>}/>
-          <Route path="/profile" element={<Profile/>}/>
+          <Route path="/newpost" element={<NewPost isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}/>
+          <Route path="/profile" element={<Profile  isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}/>
           <Route path="/signup" element={<SignUp/>}/>
       
       

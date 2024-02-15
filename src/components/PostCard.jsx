@@ -1,22 +1,34 @@
+
+
+
 import * as React from "react";
-import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { formatTimeStamp } from "../utils/formatTimeStamp";
 
 export default function PostCard({ post }) {
   return (
-    <Card sx={{ minWidth: "50%", minHeight: "60%", margin: "10px 0" }}>
+    <Card
+      sx={{
+        maxWidth: { xs: '100%', sm:"90%", md: '50%' },
+
+        height:{ xs: '30%', sm:"30%", md: '30%' },
+        // height: "40%",
+        padding: "10px",
+        marginBottom: "20px",
+        marginLeft: "10px",
+        marginRight: "10px",
+      }}
+    >
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -28,8 +40,8 @@ export default function PostCard({ post }) {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={post.username}
+        subheader={formatTimeStamp(post.timestamp)}
       />
       <CardMedia
         component="img"
@@ -37,11 +49,8 @@ export default function PostCard({ post }) {
         alt="Tree in snow"
         sx={{
           width: "100%",
-          height: "auto",
-          maxHeight: "340px",
-          objectFit: "contain",
-
-          backgroundSize: "cover",
+          height: "100%", // Ensure image takes full height of CardMedia
+          objectFit: "cover" // Maintain aspect ratio and fill the container
         }}
       />
 
