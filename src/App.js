@@ -26,6 +26,7 @@ function App() {
         <ResponsiveAppBar isLoggedIn={isLoggedIn} />
  
         <Routes >
+        <Route path="/">
         <Route path='/' exact element={<Home/>}/>
           <Route path='/signin' element={<SignIn isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}/>
           <Route path='/signout' element={<SignOut isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}/>
@@ -34,7 +35,7 @@ function App() {
           <Route path="/profile" element={<Profile  isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}/>
           <Route path="/signup" element={<SignUp/>}/>
       
-      
+          </Route>
       </Routes>
     
       
