@@ -27,7 +27,7 @@ export default function NewPost({ isLoggedIn , setIsLoggedIn }) {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate("/login");
+      navigate("/signin");
     }
   }, [isLoggedIn, navigate]);
 

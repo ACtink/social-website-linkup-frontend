@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div className='App'>
-      <Router>
+   
         <ResponsiveAppBar isLoggedIn={isLoggedIn} />
  
         <Routes >
@@ -38,7 +38,6 @@ function App() {
       </Routes>
     
       
-      </Router>
       </div>
    
   );
