@@ -2,7 +2,6 @@
 import './App.css';
 import { useState } from "react";
 
-import Header from './components/Header';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NewPost from './components/NewPost';
@@ -24,7 +23,6 @@ function App() {
   return (
     <div className='App'>
       <Router>
-        {/* <Header isLoggedIn={isLoggedIn}/> */}
         <ResponsiveAppBar isLoggedIn={isLoggedIn} />
  
         <Routes >

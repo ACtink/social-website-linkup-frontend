@@ -9,7 +9,9 @@ import { useRefreshToken } from "./useRefreshToken"
 export const useAxiosForToken = ()=>{
 
 
+
     const refresh = useRefreshToken()
+    privateAxios.defaults.withCredentials = true;
 
 
     useEffect(()=>{
@@ -24,12 +26,15 @@ export const useAxiosForToken = ()=>{
 
             const previousRequest = error?.config
 
+            console.log(error)
+
 
             if(error.response.status===403 && !previousRequest.sent){
 
                await refresh()  
 
                previousRequest.sent = true
+               console.log("sending previous request")
 
             return  await privateAxios(previousRequest)
 

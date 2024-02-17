@@ -21,7 +21,6 @@ export function usePostData(){
 
         console.log(url , data)
 
-    privateAxios.defaults.withCredentials = true;
 
     
     const response =  await privateAxios.post(url, data, {

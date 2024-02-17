@@ -17,7 +17,7 @@ function RenderPosts({ posts, setPosts, error }) {
           paddingBottom:"100px",
           flexDirection: "column",
 
-          bgcolor:"red",
+          bgcolor:"grey",
      
 
       
@@ -36,9 +36,10 @@ function RenderPosts({ posts, setPosts, error }) {
              return  <Box sx={{ 
               display: { xs: 'block', sm:"flex", md: 'flex' },
               justifyContent: 'center',
-              maxWidth: { xs: '100%', sm:"90%", md: '80%' },// Set maxWidth to 100% on xs screens
+              width: { xs: '95%', sm:"90%", md: '50%' },// Set maxWidth to 100% on xs screens
               marginX: 'auto',
               padding:"10px",
+     
             }}><PostCard key={indx +"post.title"} post={post} /></Box>
 
           })}

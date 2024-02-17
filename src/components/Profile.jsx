@@ -17,6 +17,11 @@ function Profile({ isLoggedIn , setIsLoggedIn }) {
   useEffect(() => {
     const fetchUserPosts = async () => {
       try {
+
+        privateAxios.defaults.withCredentials = true;
+
+
+
         const response = await privateAxios.get("/posts/myposts");
 
         if (response?.data) {

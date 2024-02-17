@@ -15,7 +15,7 @@ function SignOut({isLoggedIn, setIsLoggedIn}) {
     axios.defaults.withCredentials = true;
   
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/signout");
+      const response = await axios.post("/auth/signout");
   
       if (response.data) {
         localStorage.clear()

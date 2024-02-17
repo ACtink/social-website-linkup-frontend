@@ -18,7 +18,7 @@ const deletePost = async ()=>{
 
 
     try{
-     const response = await axios.delete(`http://localhost:5000/api/posts/${postId}`)
+     const response = await axios.delete(`http:localhost/5000/api/posts/${postId}`)
 
 
      const responseData = response?.data;

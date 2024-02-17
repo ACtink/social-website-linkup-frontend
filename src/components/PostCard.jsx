@@ -1,6 +1,3 @@
-
-
-
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -19,14 +16,15 @@ export default function PostCard({ post }) {
   return (
     <Card
       sx={{
-        maxWidth: { xs: '100%', sm:"90%", md: '50%' },
+        maxWidth: { xs: "100%", sm: "90%", md: "60%" },
 
-        height:{ xs: '30%', sm:"30%", md: '30%' },
+        height: { xs: "30%", sm: "30%", md: "30%" },
+        maxHeight: { md: "50%" },
         // height: "40%",
-        padding: "10px",
+        padding: "5px",
         marginBottom: "20px",
-        marginLeft: "10px",
-        marginRight: "10px",
+        // marginLeft: "10px",
+        // marginRight: "10px",
       }}
     >
       <CardHeader
@@ -49,8 +47,9 @@ export default function PostCard({ post }) {
         alt="Tree in snow"
         sx={{
           width: "100%",
-          height: "100%", // Ensure image takes full height of CardMedia
-          objectFit: "cover" // Maintain aspect ratio and fill the container
+          maxHeight: {md:"30rem",xs:"32rem"}, // Ensure image takes full height of CardMedia
+          objectFit: {md:"contain", sm:"cover", xs:"cover"},
+          padding:"1rem", // Maintain aspect ratio and fill the container
         }}
       />
 

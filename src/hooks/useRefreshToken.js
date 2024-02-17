@@ -14,7 +14,7 @@ export const useRefreshToken = ()=>{
 
         try{
 
-        const response = await axios.post("http://localhost:5000/api/auth/refresh")
+        const response = await axios.post("/auth/refresh")
 
         return response
 
