@@ -9,21 +9,18 @@ import { useAxiosForToken } from "../hooks/useAxiosForToken";
 
 
 
-export function usePostData(){
+export function useDeleteData(){
 
     const privateAxios = useAxiosForToken()
 
 
 
-    const postData = async( url , data={} )=>{
+    const deleteData = async( url )=>{
 
-
-
-        console.log(url , data)
 
 
     
-    const response =  await privateAxios.post(url, data, {
+    const response =  await privateAxios.delete(url , {
        headers: {
            'Content-Type': 'application/json', 
        },
@@ -39,7 +36,7 @@ export function usePostData(){
    
 
 
-    return postData
+    return deleteData
 
 
   

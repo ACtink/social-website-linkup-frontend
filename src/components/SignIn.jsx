@@ -13,9 +13,16 @@ import Container from "@mui/material/Container";
 import {  usePostData } from "../utils/usePostData";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import MyContext from "../context/ContextProvider";
 
 export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
   const [error, setError] = useState("");
+
+
+
+  const [ userName, setUserName , userId, setUserId ] = React.useContext(MyContext);
+
+
 
   const navigate = useNavigate();
   const postData = usePostData()
@@ -43,6 +50,13 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
       if (response?.data) {
         setIsLoggedIn(true);
         localStorage.setItem("isLoggedIn", "true");
+
+        setUserName(response.data.userName)
+        setUserId(response.data.userId)
+
+        console.log(response.data)
+
+
         navigate("/allposts");
       }
     } catch (err) {
@@ -52,7 +66,7 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" sx={{marginTop:"110px"}}>
       <CssBaseline />
       <Box
         sx={{

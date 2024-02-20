@@ -10,14 +10,25 @@ import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import SignOut from "./components/SignOut";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
+import MyContext from "./context/ContextProvider";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     Boolean(localStorage.getItem("isLoggedIn")) || false
   );
 
+
+  const [userName , setUserName]  = useState((localStorage.getItem("userName")) || "Guest")
+
+  const [userId , setUserId] = useState(+(localStorage.getItem("userId")) || null)
+
+
+
+
   return (
     <div className="App">
+
+      <MyContext.Provider value={[userName, setUserName  , userId , setUserId]}>
       <ResponsiveAppBar isLoggedIn={isLoggedIn} />
 
       <Routes>
@@ -51,6 +62,8 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
         </Route>
       </Routes>
+
+      </MyContext.Provider>
     </div>
   );
 }

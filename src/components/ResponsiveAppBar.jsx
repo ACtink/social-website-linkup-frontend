@@ -23,7 +23,7 @@ const settings = [
 ];
 
 function ResponsiveAppBar({ isLoggedIn }) {
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);

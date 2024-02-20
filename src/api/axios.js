@@ -2,8 +2,8 @@ import axios from "axios"
 
 
 // const baseURL = "http:localhost/5000/api"
-// axios.defaults.baseURL = 'http://localhost:5000/api';
-axios.defaults.baseURL= "https://linkup-backend-service.onrender.com/api"
+axios.defaults.baseURL = 'http://localhost:5000/api';
+// axios.defaults.baseURL= "https://linkup-backend-service.onrender.com/api"
 
 
 // axios.defaults.withCredentials = true;
@@ -24,8 +24,8 @@ axios.defaults.baseURL= "https://linkup-backend-service.onrender.com/api"
 // })
 export const privateAxios = axios.create({
 
-    baseURL: "https://linkup-backend-service.onrender.com/api",
-    // baseURL: "http://localhost:5000/api",
+    // baseURL: "https://linkup-backend-service.onrender.com/api",
+    baseURL: "http://localhost:5000/api",
 
 
     headers: {
