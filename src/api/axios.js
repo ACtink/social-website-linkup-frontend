@@ -1,6 +1,9 @@
 import axios from "axios"
 
 
+
+
+console.log("this is process.env" , process.env.NODE_ENV)
 // const baseURL = "http:localhost/5000/api"
 axios.defaults.baseURL = 'http://localhost:5000/api';
 // axios.defaults.baseURL= "https://linkup-backend-service.onrender.com/api"

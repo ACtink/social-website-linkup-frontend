@@ -20,7 +20,7 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
 
 
 
-  const [ userName, setUserName , userId, setUserId ] = React.useContext(MyContext);
+  const [ userName, setUserName , userId, setUserId  ] = React.useContext(MyContext);
 
 
 
@@ -28,7 +28,7 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
   const postData = usePostData()
 
 
-  console.log(postData)
+
 
   const handleSubmit = async(event) => {
     event.preventDefault();
@@ -52,6 +52,8 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
         localStorage.setItem("isLoggedIn", "true");
 
         setUserName(response.data.userName)
+        localStorage.setItem("userId", response.data.userId )
+
         setUserId(response.data.userId)
 
         console.log(response.data)

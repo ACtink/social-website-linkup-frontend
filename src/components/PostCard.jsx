@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { formatTimeStamp } from "../utils/formatTimeStamp";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Tooltip } from "@mui/material";
 import Box from "@mui/material/Box";
 import { usePostData } from "../utils/usePostData";
 import LikeButton from "./LikeButton";
@@ -23,6 +23,11 @@ export default function PostCard({ post }) {
 
 
   const [loading, setLoading] = React.useState(false);
+
+
+  const [totalLikes, setTotalLikes] = React.useState(post.likes);
+
+
 
 
   const postData = usePostData()
@@ -46,7 +51,7 @@ export default function PostCard({ post }) {
 
     const data = {
       comment: formData.get("comment"),
-      postId:post._id
+      postId: post._id
       
     
     };
@@ -166,32 +171,20 @@ export default function PostCard({ post }) {
 
      
       <CardActions disableSpacing>
-      {/* <Box component="form" noValidate onSubmit={handleLike} >
+      
 
-
-        <IconButton aria-label="add to favorites" type="submit">
-
-  
-          <FavoriteIcon />
-         
-         
-        </IconButton>
-
-        </Box> */}
-
-
-        <LikeButton postId={post._id}/>
+        <LikeButton post={post} setTotalLikes={setTotalLikes}   />
 
 
 
         <Typography variant="body2">
-           <span> {post.likes} Likes</span> 
+           <span> {totalLikes} Likes</span> 
           </Typography>
        
       </CardActions>
      
-      <CardContent style={{ display: 'flex', alignItems: 'center', gap:"15px" }}>    
-        <Typography variant="body1" sx={{ color: 'text.primary', minWidth:"15%" }}>
+      <CardContent style={{ display: 'flex' , alignItems: 'start', gap:"15px" }}>    
+        <Typography variant="body1" sx={{ color: 'text.primary', minWidth:"15%", flexBasis:"0" }}>
           {post.username}--
         </Typography>
        
@@ -200,7 +193,7 @@ export default function PostCard({ post }) {
       {isTruncated && !showMore && (
         <span>{post.title.slice(0, 20)}...</span>
       )}
-      {isTruncated && showMore && <span>{post.title}</span>}
+      {isTruncated && showMore && <Box sx={{maxWidth:"65vw", wordWrap:"break-word" }}>{post.title}</Box>}
       {!isTruncated && <span>{post.title}</span>}
       {isTruncated && !showMore && <Button onClick={handleShowMore}>Show more</Button>}
       
@@ -243,7 +236,7 @@ export default function PostCard({ post }) {
 
                 </Box>
 
-        <Typography variant="body2" color="text.secondary">
+        {/* <Typography variant="body2" color="text.secondary">
       {isTruncated && !showMore && (
         <span>{post.title.slice(0, 20)}...</span>
       )}
@@ -252,7 +245,12 @@ export default function PostCard({ post }) {
       {isTruncated && !showMore && <Button onClick={handleShowMore}>Show more</Button>}
       
       {showMore && <Button onClick={handleShowMore}>Show less</Button>}
-    </Typography>
+    </Typography> */}
+
+
+
+
+
 
        </CardContent>
     </Card>

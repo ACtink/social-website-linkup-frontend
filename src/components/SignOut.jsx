@@ -20,6 +20,7 @@ function SignOut({isLoggedIn, setIsLoggedIn}) {
       if (response.data) {
         localStorage.clear()
         setIsLoggedIn(false)
+        
 
         const data = await response.data;
         console.log("Data from the server:", data);

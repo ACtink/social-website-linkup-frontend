@@ -20,15 +20,14 @@ function App() {
 
   const [userName , setUserName]  = useState((localStorage.getItem("userName")) || "Guest")
 
-  const [userId , setUserId] = useState(+(localStorage.getItem("userId")) || null)
-
+  const [userId , setUserId] = useState((localStorage.getItem("userId")) || null)
 
 
 
   return (
     <div className="App">
 
-      <MyContext.Provider value={[userName, setUserName  , userId , setUserId]}>
+      <MyContext.Provider value={[userName, setUserName  , userId , setUserId ]}>
       <ResponsiveAppBar isLoggedIn={isLoggedIn} />
 
       <Routes>
