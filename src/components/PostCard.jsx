@@ -163,9 +163,9 @@ export default function PostCard({ post }) {
         alt="Tree in snow"
         sx={{
           width: "100%",
-          maxHeight: {md:"30rem",xs:"32rem"}, // Ensure image takes full height of CardMedia
+          maxHeight: {md:"30rem",xs:"32rem"}, 
           objectFit: {md:"contain", sm:"cover", xs:"cover"},
-          padding:"1rem", // Maintain aspect ratio and fill the container
+          padding:"1rem", 
         }}
       />
 
@@ -183,18 +183,37 @@ export default function PostCard({ post }) {
        
       </CardActions>
      
-      <CardContent style={{ display: 'flex' , alignItems: 'start', gap:"15px" }}>    
-        <Typography variant="body1" sx={{ color: 'text.primary', minWidth:"15%", flexBasis:"0" }}>
-          {post.username}--
-        </Typography>
-       
+      <CardContent sx={{  minWidth:"100%", wordWrap:"break-word", alignItems: 'start', gap:"15px" }}>    
+     
+        
+        <Typography variant="body1" sx={{ color: 'text.secondary', minWidth: "15%" }}>
+  <Box
+    sx={{
+      fontFamily: "Arial, sans-serif", 
+      fontSize: "1rem",
+      fontStyle: "italic", 
+      textTransform: "capitalize", 
+      color: '#031729', 
+      textShadow: '1px 1px 2px rgba(0,0,0,0.3)', 
+      borderBottom: '1px solid #ddd', 
+      letterSpacing: '2px', 
+      fontWeight: 800,
+
+    }}
+  >
+    {post.username.charAt(0).toUpperCase() + post.username.slice(1)} - 
+  </Box>
+</Typography>
+
+
+
 
         <Typography variant="body2" color="text.secondary">
       {isTruncated && !showMore && (
-        <span>{post.title.slice(0, 20)}...</span>
+        <Box sx={{color:"#1F032A"}}>{post.title.slice(0, 90)}...</Box>
       )}
-      {isTruncated && showMore && <Box sx={{maxWidth:"65vw", wordWrap:"break-word" }}>{post.title}</Box>}
-      {!isTruncated && <span>{post.title}</span>}
+      {isTruncated && showMore && <Box sx={{ maxHeight:"20%", flex:"2", color:"#1F032A" ,wordWrap:"break-word" }}>{post.title}</Box>}
+      {!isTruncated && <Box sx={{color:"#1F032A"}}>{post.title}</Box>}
       {isTruncated && !showMore && <Button onClick={handleShowMore}>Show more</Button>}
       
       {showMore && <Button onClick={handleShowMore}>Show less</Button>}
@@ -220,12 +239,12 @@ export default function PostCard({ post }) {
                         />
 
                 </Box>
-           {  loading &&  <Button type="submit" variant="contained"  disabled sx={{ width: "20%", height: "5%", padding:"2px" }}>
+           {  loading &&  <Button type="submit" variant="contained"  disabled sx={{ width: "20%", fontSize:"0.6rem", height: "5%", padding:"2px" }}>
               loding...
             </Button>
 
            } 
-            {  !loading &&  <Button type="submit" variant="contained"  sx={{ width: "20%",  height: "5%", padding:"2px" }}>
+            {  !loading &&  <Button type="submit" variant="contained"  sx={{ width: "20%",  fontSize:"0.6rem" , height: "5%", padding:"2px" }}>
               Comment
             </Button>
 
