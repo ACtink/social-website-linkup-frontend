@@ -19,8 +19,12 @@ export function useSignOut({isLoggedIn, setIsLoggedIn}) {
       const response = await axios.post("/auth/signout");
   
       if (response?.data) {
+        console.log("running in signout.......if conditon ")
         localStorage.clear()
-        setIsLoggedIn(false)
+        setIsLoggedIn(!isLoggedIn)
+
+        console.log(isLoggedIn)
+
 
         console.log("Data from the server:", response?.data);
         navigate("/")

@@ -1,29 +1,24 @@
+import React, { useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
 import LeftSide from "./LeftSide";
-import RightSide from "./RightSide";
-import { useEffect, useState } from "react";
 import MiddleSection from "./MiddleSection";
-import { Box } from "@mui/material";
+import RightSide from "./RightSide";
 import { useAxiosForToken } from "../hooks/useAxiosForToken";
 import { useSignOut } from "../utils/useSignOut";
+import RenderPosts from "./RenderPosts";
 
-function Profile({ isLoggedIn , setIsLoggedIn }) {
+function Profile({ isLoggedIn, setIsLoggedIn }) {
   const [userPosts, setUserPosts] = useState(null);
   const [error, setError] = useState("");
-  const signOut = useSignOut(isLoggedIn , setIsLoggedIn)
-
-
+  const signOut = useSignOut(isLoggedIn, setIsLoggedIn);
   const privateAxios = useAxiosForToken();
+  const checkLoginStatus = localStorage.getItem("isLoggedIn") || false;
 
   useEffect(() => {
     const fetchUserPosts = async () => {
       try {
-
         privateAxios.defaults.withCredentials = true;
-
-
-
         const response = await privateAxios.get("/posts/myposts");
-
         if (response?.data) {
           console.log(response.data);
           setUserPosts(response.data);
@@ -32,42 +27,39 @@ function Profile({ isLoggedIn , setIsLoggedIn }) {
       } catch (err) {
         if (err.response?.data) {
           console.log("in catch ");
-
-           signOut()
-          
-
+          signOut();
           setError(err.response?.data.message);
         } else {
-          setError("Server is Down , Can't fetch Your Posts now");
+          setError("Server is Down, Can't fetch Your Posts now");
         }
       }
     };
 
-    fetchUserPosts();
+    if (checkLoginStatus) {
+      fetchUserPosts();
+    } else {
+      signOut(checkLoginStatus, setIsLoggedIn);
+    }
   }, []);
 
   return (
     <Box
       sx={{
-        display: { xs: "flex", md: "flex" },
+        display: "flex",
         alignItems: "center",
-        flexDirection: "coloumn",
+        flexDirection: "column",
         justifyContent: "center",
       }}
     >
-
-      {console.log(error)}
-      <h1> {error && error}</h1>
+      {error && (
+        <Typography variant="h6" color="error" sx={{ marginBottom: 2 }}>
+          {error}
+        </Typography>
+      )}
 
       <LeftSide />
 
-      {userPosts && (
-        <MiddleSection
-          posts={userPosts}
-          setPosts={setUserPosts}
-          error={error}
-        />
-      )}
+      <RenderPosts posts={userPosts} setPosts={setUserPosts} error={error} />
 
       <RightSide />
     </Box>

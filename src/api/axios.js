@@ -23,15 +23,7 @@ axios.defaults.baseURL = baseURL;
 
 
 
-// export const privateAxios = axios.create({
-   
-//     headers: {
-//            Accept: 'application/json',
-           
-//       },
-//       withCredentials: true 
 
-// })
 export const privateAxios = axios.create({
 
     // baseURL: "https://linkup-backend-service.onrender.com/api",

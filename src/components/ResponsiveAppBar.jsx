@@ -33,17 +33,34 @@ function ResponsiveAppBar({ isLoggedIn }) {
     setAnchorElUser(null);
   };
 
+
+  React.useEffect(()=>{
+
+
+  },[isLoggedIn])
+
   return (
-    <AppBar position="fixed" sx={{background: "linear-gradient(-225deg, #FF3CAC 0%, #562B7C 52%, #2B86C5 100%)"}}>
+    <AppBar
+      position="fixed"
+      sx={{
+        background:
+          "linear-gradient(-225deg, #FF3CAC 0%, #562B7C 52%, #2B86C5 100%)",
+      }}
+    >
       <Container maxWidth="xl">
-        <Toolbar disableGutters  sx={{ py: 2 }}>
+        <Toolbar disableGutters sx={{ py: 2 }}>
           <Box sx={{ display: { xs: "flex", md: "flex" }, flexGrow: 1 }}>
-            <PublicIcon sx={{ display: { xs: "flex", md: "flex" }, mr: 1 }} />
+            <Link to={"/"}>
+              {" "}
+              <PublicIcon
+                sx={{ display: { xs: "flex", md: "flex" }, mr: 1 }}
+              />{" "}
+            </Link>
             <Typography
               variant="h6"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
+              href="/"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -80,33 +97,37 @@ function ResponsiveAppBar({ isLoggedIn }) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {isLoggedIn && settings.map((setting, indx) => (
+              {isLoggedIn &&
+                settings.map(
+                  (setting, indx) =>
+                    setting.showOnLoggedin && (
+                      <MenuItem key={indx} onClick={handleCloseUserMenu}>
+                        <Typography textAlign="center">
+                          {isLoggedIn && setting.showOnLoggedin && (
+                            <Link to={`/${setting.value.toLowerCase()}`}>
+                              {setting.showOnLoggedin && setting.value}
+                            </Link>
+                          )}
+                        </Typography>
+                      </MenuItem>
+                    )
+                )}
 
-                 setting.showOnLoggedin && <MenuItem key={indx} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">
-                    {isLoggedIn && setting.showOnLoggedin && (
-                      <Link to={`/${setting.value.toLowerCase()}`}>
-                        {setting.showOnLoggedin && setting.value}
-                      </Link>
-                    )}
-                  </Typography>
-                </MenuItem> 
-
-
-
-              ))}
-
-              {!isLoggedIn && settings.map((setting, indx) => (
-              !setting.showOnLoggedin  && <MenuItem key={indx} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">
-                    {!isLoggedIn && !setting.showOnLoggedin && (
-                      <Link to={`/${setting.value.toLowerCase()}`}>
-                        {!setting.showOnLoggedin && setting.value}
-                      </Link>
-                    )}
-                  </Typography>
-                </MenuItem>
-              ))}
+              {!isLoggedIn &&
+                settings.map(
+                  (setting, indx) =>
+                    !setting.showOnLoggedin && (
+                      <MenuItem key={indx} onClick={handleCloseUserMenu}>
+                        <Typography textAlign="center">
+                          {!isLoggedIn && !setting.showOnLoggedin && (
+                            <Link to={`/${setting.value.toLowerCase()}`}>
+                              {!setting.showOnLoggedin && setting.value}
+                            </Link>
+                          )}
+                        </Typography>
+                      </MenuItem>
+                    )
+                )}
             </Menu>
           </Box>
         </Toolbar>

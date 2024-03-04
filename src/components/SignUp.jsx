@@ -1,12 +1,9 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-
-
-import { Link } from "react-router-dom";
-
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -15,12 +12,9 @@ import Container from "@mui/material/Container";
 import { usePostData } from "../utils/usePostData";
 import { useNavigate } from "react-router-dom";
 
-
-
 export default function SignUp() {
   const navigate = useNavigate();
-
-  const postData = usePostData()
+  const postData = usePostData();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,12 +27,7 @@ export default function SignUp() {
     };
 
     try {
-      const response = await postData(
-        "/auth/signup",
-        data
-      );
-
-      console.log(response.data.message);
+      const response = await postData("/auth/signup", data);
 
       if (response.data.message) {
         navigate("/signin");
@@ -49,7 +38,7 @@ export default function SignUp() {
   };
 
   return (
-    <Container component="main" maxWidth="xs" sx={{marginTop:"110px"}}>
+    <Container component="main" maxWidth="xs" sx={{ marginTop: "110px" }}>
       <CssBaseline />
       <Box
         sx={{
@@ -78,7 +67,6 @@ export default function SignUp() {
                 autoFocus
               />
             </Grid>
-
             <Grid item xs={12}>
               <TextField
                 required
@@ -116,6 +104,19 @@ export default function SignUp() {
               </Link>
             </Grid>
           </Grid>
+          <Button
+            component={Link}
+            to={"/"}
+            variant="outlined"
+            fullWidth
+            sx={{
+              mt: 2,
+              borderColor: "primary.main",
+              color: "primary.main",
+            }}
+          >
+            Back to Home
+          </Button>
         </Box>
       </Box>
     </Container>

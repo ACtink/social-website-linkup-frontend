@@ -1,19 +1,40 @@
 import Box from "@mui/material/Box";
-
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import ImageIcon from "@mui/icons-material/Image";
-import WorkIcon from "@mui/icons-material/Work";
-import BeachAccessIcon from "@mui/icons-material/BeachAccess";
-import { Link } from "react-router-dom";
-
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { Link, useLocation } from "react-router-dom";
 
 function LeftSide() {
+  const location = useLocation();
+  const [selectedItem, setSelectedItem] = useState(""); // State to keep track of selected item
+
+  useEffect(() => {
+    const pathname = location.pathname;
+    switch (pathname) {
+      case "/allposts":
+        setSelectedItem("allposts");
+        break;
+      case "/profile":
+        setSelectedItem("profile");
+        break;
+      case "/newpost":
+        setSelectedItem("newpost");
+        break;
+      case "/signout":
+        setSelectedItem("signout");
+        break;
+      default:
+        setSelectedItem("");
+    }
+  }, [location]);
+
   return (
     <Box
       sx={{
@@ -35,39 +56,117 @@ function LeftSide() {
           marginTop: "100px",
           justifyContent: "center",
           alignItems: "center",
-       
         }}
       >
-        <List sx={{display:{md:"flex"} , flexDirection:"column" , gap:"30px", width: "60%", maxWidth: 390, height:"80%" }}>
-         <Link to={"/allposts"}>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <ImageIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="All Posts"  />
-          </ListItem>
+        <List
+          sx={{
+            display: { md: "flex" },
+            flexDirection: "column",
+            gap: "30px",
+            width: "60%",
+            maxWidth: 390,
+            height: "80%",
+          }}
+        >
+          <Link to={"/allposts"} style={{ textDecoration: "none" }}>
+            <ListItem
+              button
+              sx={{
+                "&:hover": {
+                  backgroundColor: selectedItem !== "allposts" && "#f0f0f0",
+                  borderRadius: "10px",
+                },
+                borderRadius: "10px",
+                backgroundColor:
+                  selectedItem === "allposts" ? "#f0f0f0" : "transparent",
+              }}
+              onClick={() => setSelectedItem("allposts")}
+            >
+              <ListItemAvatar>
+                <Avatar sx={{ backgroundColor: "#1976d2" }}>
+                  <ImageIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="All Posts"
+                sx={{ fontFamily: "Arial", fontWeight: 600 }}
+              />
+            </ListItem>
           </Link>
-          <Link to={"/profile"}>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <WorkIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Profile"  />
-          </ListItem>
+          <Link to={"/profile"} style={{ textDecoration: "none" }}>
+            <ListItem
+              button
+              sx={{
+                "&:hover": {
+                  backgroundColor: selectedItem !== "profile" && "#f0f0f0",
+                  borderRadius: "10px",
+                },
+                borderRadius: "10px",
+                backgroundColor:
+                  selectedItem === "profile" ? "#f0f0f0" : "transparent",
+              }}
+              onClick={() => setSelectedItem("profile")}
+            >
+              <ListItemAvatar>
+                <Avatar sx={{ backgroundColor: "#4caf50" }}>
+                  <AccountCircleIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Profile"
+                sx={{ fontFamily: "Arial", fontWeight: 600 }}
+              />
+            </ListItem>
           </Link>
-          <Link to={"/newpost"}>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <BeachAccessIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Create a new Post"  />
-          </ListItem>
+          <Link to={"/newpost"} style={{ textDecoration: "none" }}>
+            <ListItem
+              button
+              sx={{
+                "&:hover": {
+                  backgroundColor: selectedItem !== "newpost" && "#f0f0f0",
+                  borderRadius: "10px",
+                },
+                borderRadius: "10px",
+                backgroundColor:
+                  selectedItem === "newpost" ? "#f0f0f0" : "transparent",
+              }}
+              onClick={() => setSelectedItem("newpost")}
+            >
+              <ListItemAvatar>
+                <Avatar sx={{ backgroundColor: "#ff9800" }}>
+                  <AddCircleIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Create a new Post"
+                sx={{ fontFamily: "Arial", fontWeight: 600 }}
+              />
+            </ListItem>
+          </Link>
+          <Link to={"/signout"} style={{ textDecoration: "none" }}>
+            <ListItem
+              button
+              sx={{
+                "&:hover": {
+                  backgroundColor: selectedItem !== "signout" && "#f0f0f0",
+                  borderRadius: "10px",
+                },
+                borderRadius: "10px",
+                backgroundColor:
+                  selectedItem === "signout" ? "#f0f0f0" : "transparent",
+              }}
+              onClick={() => setSelectedItem("signout")}
+            >
+              <ListItemAvatar>
+                <Avatar sx={{ backgroundColor: "#f44336" }}>
+                  <ExitToAppIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Sign Out"
+                sx={{ fontFamily: "Arial", fontWeight: 600 }}
+              />
+            </ListItem>
           </Link>
         </List>
       </Box>

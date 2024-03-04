@@ -1,36 +1,27 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-
-import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import {  usePostData } from "../utils/usePostData";
+import { usePostData } from "../utils/usePostData";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import MyContext from "../context/ContextProvider";
 
 export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
   const [error, setError] = useState("");
-
-
-
-  const [ userName, setUserName , userId, setUserId  ] = React.useContext(MyContext);
-
-
-
+  const [userName, setUserName, userId, setUserId] =
+    React.useContext(MyContext);
   const navigate = useNavigate();
-  const postData = usePostData()
+  const postData = usePostData();
 
-
-
-
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
 
@@ -39,36 +30,27 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
       password: formData.get("password"),
     };
 
-    console.log("this is form data" ,data)
-
     try {
-
-      const response = await postData("/auth/signin", data)
-
-      console.log(response);
+      const response = await postData("/auth/signin", data);
 
       if (response?.data) {
         setIsLoggedIn(true);
         localStorage.setItem("isLoggedIn", "true");
 
-        setUserName(response.data.userName)
-        localStorage.setItem("userId", response.data.userId )
+        setUserName(response.data.userName);
+        localStorage.setItem("userId", response.data.userId);
+        setUserId(response.data.userId);
 
-        setUserId(response.data.userId)
-
-        console.log(response.data)
-
-
-        navigate("/allposts");
+        navigate("/profile");
       }
     } catch (err) {
-      console.log(err)
-      // setError(err);
+      console.log(err);
+      setError(err);
     }
   };
 
   return (
-    <Container component="main" maxWidth="xs" sx={{marginTop:"110px"}}>
+    <Container component="main" maxWidth="xs" sx={{ marginTop: "110px" }}>
       <CssBaseline />
       <Box
         sx={{
@@ -120,10 +102,19 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link to={"/signup"} variant="body2">
-                Don't have an Account ? Sign Up
+                Don't have an Account? Sign Up
               </Link>
             </Grid>
           </Grid>
+          <Button
+            component={Link}
+            to={"/"}
+            variant="outlined"
+            fullWidth
+            sx={{ mt: 2, borderColor: "primary.main", color: "primary.main" }}
+          >
+            Back to Home
+          </Button>
         </Box>
       </Box>
     </Container>

@@ -1,11 +1,15 @@
 import React from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import LeftSide from './LeftSide';
+import RightSide from './RightSide';
+import SignOutButton from './SignOutButton';
+import { useNavigate } from "react-router-dom";
+
 
 
 function SignOut({isLoggedIn, setIsLoggedIn}) {
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
 
   const handleSubmit = async (e) => {
@@ -21,7 +25,6 @@ function SignOut({isLoggedIn, setIsLoggedIn}) {
         localStorage.clear()
         setIsLoggedIn(false)
         
-
         const data = await response.data;
         console.log("Data from the server:", data);
         navigate("/")
@@ -37,21 +40,12 @@ function SignOut({isLoggedIn, setIsLoggedIn}) {
 
 
   return (
-    <div className='flex justify-center h-screen '>
-
-        <div className='bg-green-400 my-16 h-16 w-40 '>
-            
-            <form action="#" onSubmit={handleSubmit}>
-
-                <button type='submit'>Submit</button>
-
-            </form>          
-        </div>
-
-
-
-    </div>
-  )
+    <>
+    <LeftSide/>
+      <SignOutButton handleSubmit={handleSubmit}/>
+      <RightSide/>
+    </>
+  );
 }
 
 export default SignOut
