@@ -29,7 +29,7 @@ export const useAxiosForToken = ()=>{
             console.log(error)
 
 
-            if(error.response.status===403 && !previousRequest.sent){
+            if(error.response?.status===403 && !previousRequest.sent){
 
                await refresh()  
 

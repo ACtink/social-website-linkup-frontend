@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -8,12 +8,14 @@ import {
   Skeleton,
 } from "@mui/material";
 
-import PostCard from "./PostCard"
-
+import PostCard from "./PostCard";
+import NoPostsMessage from "./NoPostsMessage";
 
 function RenderPosts({ posts, setPosts, error }) {
   const skeletonWidth = "60vw";
   const skeletonHeight = 300;
+
+  
 
   return (
     <>
@@ -55,7 +57,11 @@ function RenderPosts({ posts, setPosts, error }) {
                   padding: "10px",
                 }}
               >
-                <PostCard key={indx + "post.title"} post={post} />
+                <PostCard
+                  key={indx + "post.title"}
+                  post={post}
+                  
+                />
               </Box>
             ))
           : Array.from({ length: 5 }).map((_, index) => (
@@ -117,6 +123,7 @@ function RenderPosts({ posts, setPosts, error }) {
               </Box>
             ))}
       </Box>
+      {/* {posts?.length===0 &&  <NoPostsMessage/>} */}
     </>
   );
 }

@@ -44,8 +44,19 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
         navigate("/profile");
       }
     } catch (err) {
-      console.log(err);
-      setError(err);
+
+   console.log(err);
+
+      if (err.code === "ERR_NETWORK"){
+
+        setError("Something went Wrong on the server, please try after some time")
+
+      } 
+
+      else{
+         setError(err?.response?.data?.message);
+
+      }     
     }
   };
 
@@ -66,8 +77,14 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
         <Typography component="h1" variant="h5">
           Sign In
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <h1>{error && error}</h1>
+
+        {error && (
+          <Typography variant="h6" sx={{ color: "red", marginTop: 2 }}>
+            {error}
+          </Typography>
+        )}
+
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -77,6 +94,9 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={() => {
+                  setError("");
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -88,6 +108,9 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                onChange={() => {
+                  setError("");
+                }}
               />
             </Grid>
           </Grid>
@@ -102,7 +125,7 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link to={"/signup"} variant="body2">
-                Don't have an Account? Sign Up
+                Don't have an Account? <strong>Sign Up</strong>
               </Link>
             </Grid>
           </Grid>

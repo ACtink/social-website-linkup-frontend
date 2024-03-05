@@ -11,10 +11,20 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { usePostData } from "../utils/usePostData";
 import { useNavigate } from "react-router-dom";
+ import  { useRef } from "react";
+
+
 
 export default function SignUp() {
   const navigate = useNavigate();
   const postData = usePostData();
+
+   const formRef = useRef(null);
+
+    const [error, setError] = React.useState("");
+
+    const [successMessage , setSuccessMessage] = React.useState("")
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -26,14 +36,31 @@ export default function SignUp() {
       password: formData.get("password"),
     };
 
+        formRef.current.reset();
+
+
     try {
       const response = await postData("/auth/signup", data);
 
-      if (response.data.message) {
-        navigate("/signin");
+      if (response.data?.message) {
+
+        setSuccessMessage(`Successfully Signed Up ,Please`)
+
+        // navigate("/signin");
       }
     } catch (err) {
-      console.log(err);
+
+ console.log(err);
+
+ if (err.code === "ERR_NETWORK") {
+   setError("Something went Wrong on the server, please try after some time");
+ } else {
+   setError(err?.response?.data?.message);
+ }     
+
+
+
+      
     }
   };
 
@@ -54,7 +81,31 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+
+        {error && (
+          <Typography variant="h6" sx={{ color: "red", marginTop: 2 }}>
+            {error}
+          </Typography>
+        )}
+
+        {successMessage && (
+          <Typography variant="h6" sx={{ color: "green", marginTop: 2 }}>
+            {successMessage}{" "}
+            <Link to={"/signin"}>
+              {" "}
+              <span style={{ textDecoration: "underline", color: "blue" }}>
+                Sign In
+              </span>{" "}
+            </Link>
+          </Typography>
+        )}
+
+        <Box
+          component="form"
+          ref={formRef}
+          onSubmit={handleSubmit}
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -100,7 +151,7 @@ export default function SignUp() {
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link to={"/signin"} variant="body2">
-                Already have an account? Sign in
+                Already have an account? <strong>Sign In</strong>
               </Link>
             </Grid>
           </Grid>

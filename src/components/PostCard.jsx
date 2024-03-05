@@ -14,12 +14,20 @@ import { Button, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import { usePostData } from "../utils/usePostData";
 import LikeButton from "./LikeButton";
+import SinglePostPage from "./SinglePostPage";
+ import { useRef } from "react";
 
 
 export default function PostCard({ post }) {
 
 
+const [isModalOpen, setIsModalOpen] = React.useState(false);
 
+const modalHandler = () => {
+  setIsModalOpen(!isModalOpen);
+};
+
+   const formRef = useRef(null);
 
   const [loading, setLoading] = React.useState(false);
 
@@ -37,7 +45,7 @@ export default function PostCard({ post }) {
 
 
   const [showMore, setShowMore] = React.useState(false);
-  const isTruncated = post.title.length > 20; // Adjust 20 based on your desired line count
+  const isTruncated = post.title.length > 20; 
 
   const handleShowMore = () => {
     setShowMore(!showMore);
@@ -58,6 +66,8 @@ export default function PostCard({ post }) {
       
     
     };
+
+    formRef.current.reset();
 
     setLoading(true)
 
@@ -100,24 +110,6 @@ export default function PostCard({ post }) {
 
 
 
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -127,158 +119,166 @@ export default function PostCard({ post }) {
 
 
   return (
-    <Card
-      sx={{
-        maxWidth: { xs: "100%", sm: "90%", md: "70%" },
+    <>
+      <SinglePostPage post={post} isOpen={isModalOpen} onClose={modalHandler} />
 
-        height: { xs: "30%", sm: "30%", md: "30%" },
-        maxHeight: { md: "50%" },
-        // height: "40%",
-        padding: "5px",
-        marginBottom: "20px",
-        minWidth: { xs: "100%", sm: "90%", md: "70%" },
-
-        // marginLeft: "10px",
-        // marginRight: "10px",
-      }}
-    >
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {post.title.slice(0, 1)}
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={post.username}
-        subheader={formatTimeStamp(post.timestamp)}
-      />
-      <CardMedia
-        component="img"
-        image={post.photoUrl}
-        alt="Tree in snow"
+      <Card
         sx={{
-          width: "100%",
-          maxHeight: { md: "30rem", xs: "32rem" },
-          objectFit: { md: "contain", sm: "cover", xs: "cover" },
-          padding: "1rem",
-        }}
-      />
+          maxWidth: { xs: "100%", sm: "90%", md: "70%" },
 
-      <CardActions disableSpacing>
-        <LikeButton post={post} setTotalLikes={setTotalLikes} />
+          height: { xs: "30%", sm: "30%", md: "30%" },
+          maxHeight: { md: "50%" },
+          // height: "40%",
+          padding: "5px",
+          marginBottom: "20px",
+          minWidth: { xs: "100%", sm: "90%", md: "70%" },
 
-        <Typography variant="body2">
-          <span> {totalLikes} Likes</span>
-        </Typography>
-      </CardActions>
-
-      <CardContent
-        sx={{
-          minWidth: "100%",
-          wordWrap: "break-word",
-          alignItems: "start",
-          gap: "15px",
+          // marginLeft: "10px",
+          // marginRight: "10px",
         }}
       >
-        <Typography
-          component={"div"}
-          variant="body1"
-          sx={{ color: "text.secondary", minWidth: "15%" }}
-        >
-          <Box
-            sx={{
-              fontFamily: "Arial, sans-serif",
-              fontSize: "1rem",
-              fontStyle: "italic",
-              textTransform: "capitalize",
-              color: "#031729",
-              textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
-              borderBottom: "1px solid #ddd",
-              letterSpacing: "2px",
-              fontWeight: 800,
-            }}
-          >
-            {post.username.charAt(0).toUpperCase() + post.username.slice(1)} -
-          </Box>
-        </Typography>
+        <CardHeader
+          avatar={
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+              {post.title.slice(0, 1)}
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={post.username}
+          subheader={formatTimeStamp(post.timestamp)}
+        />
+        <CardMedia
+          onClick={modalHandler}
+          component="img"
+          image={post.photoUrl}
+          alt="Tree in snow"
+          sx={{
+            width: "100%",
+            maxHeight: { md: "30rem", xs: "32rem" },
+            objectFit: { md: "contain", sm: "cover", xs: "cover" },
+            padding: "1rem",
+          }}
+        />
 
-        <Typography component={"div"} variant="body2" color="text.secondary">
-          {isTruncated && !showMore && (
-            <Box sx={{ color: "#1F032A" }}>{post.title.slice(0, 90)}...</Box>
-          )}
-          {isTruncated && showMore && (
+        <CardActions disableSpacing>
+          <LikeButton post={post} setTotalLikes={setTotalLikes} />
+
+          <Typography variant="body2">
+            <span> {totalLikes} Likes</span>
+          </Typography>
+        </CardActions>
+
+        <CardContent
+          sx={{
+            minWidth: "100%",
+            wordWrap: "break-word",
+            alignItems: "start",
+            gap: "15px",
+          }}
+        >
+          <Typography
+            component={"div"}
+            variant="body1"
+            sx={{ color: "text.secondary", minWidth: "15%" }}
+          >
             <Box
               sx={{
-                maxHeight: "20%",
-                flex: "2",
-                color: "#1F032A",
-                wordWrap: "break-word",
+                fontFamily: "Arial, sans-serif",
+                fontSize: "1rem",
+                fontStyle: "italic",
+                textTransform: "capitalize",
+                color: "#031729",
+                textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
+                borderBottom: "1px solid #ddd",
+                letterSpacing: "2px",
+                fontWeight: 800,
               }}
             >
-              {post.title}
+              {post.username.charAt(0).toUpperCase() + post.username.slice(1)} -
             </Box>
-          )}
-          {!isTruncated && <Box sx={{ color: "#1F032A" }}>{post.title}</Box>}
-          {isTruncated && !showMore && (
-            <Button onClick={handleShowMore}>Show more</Button>
-          )}
+          </Typography>
 
-          {showMore && <Button onClick={handleShowMore}>Show less</Button>}
-        </Typography>
-      </CardContent>
+          <Typography component={"div"} variant="body2" color="text.secondary">
+            {isTruncated && !showMore && (
+              <Box sx={{ color: "#1F032A" }}>{post.title.slice(0, 90)}...</Box>
+            )}
+            {isTruncated && showMore && (
+              <Box
+                sx={{
+                  maxHeight: "20%",
+                  flex: "2",
+                  color: "#1F032A",
+                  wordWrap: "break-word",
+                }}
+              >
+                {post.title}
+              </Box>
+            )}
+            {!isTruncated && <Box sx={{ color: "#1F032A" }}>{post.title}</Box>}
+            {isTruncated && !showMore && (
+              <Button onClick={handleShowMore}>Show more</Button>
+            )}
 
-      <CardContent
-        style={{ display: "flex", flexDirection: "column", gap: "15px" }}
-      >
-        <Box component="form" noValidate onSubmit={handleSubmit}>
-          <Box
-            sx={{ display: "flex", flexDirection: "column", minWidth: "100%" }}
-          >
-            <TextField
-              fullWidth
-              name="comment"
-              id="standard-search"
-              label="Type a comment"
-              type="search"
-              variant="standard"
-            />
+            {showMore && <Button onClick={handleShowMore}>Show less</Button>}
+          </Typography>
+        </CardContent>
+
+        <CardContent
+          style={{ display: "flex", flexDirection: "column", gap: "15px" }}
+        >
+          <Box component="form" ref={formRef} onSubmit={handleSubmit}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                minWidth: "100%",
+              }}
+            >
+              <TextField
+                fullWidth
+                name="comment"
+                id="standard-search"
+                label="Type a comment"
+                type="search"
+                variant="standard"
+              />
+            </Box>
+            {loading && (
+              <Button
+                type="submit"
+                variant="contained"
+                disabled
+                sx={{
+                  width: "20%",
+                  fontSize: "0.6rem",
+                  height: "5%",
+                  padding: "2px",
+                }}
+              >
+                loding...
+              </Button>
+            )}
+            {!loading && (
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  width: "20%",
+                  fontSize: "0.6rem",
+                  height: "5%",
+                  padding: "2px",
+                }}
+              >
+                Comment
+              </Button>
+            )}
           </Box>
-          {loading && (
-            <Button
-              type="submit"
-              variant="contained"
-              disabled
-              sx={{
-                width: "20%",
-                fontSize: "0.6rem",
-                height: "5%",
-                padding: "2px",
-              }}
-            >
-              loding...
-            </Button>
-          )}
-          {!loading && (
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                width: "20%",
-                fontSize: "0.6rem",
-                height: "5%",
-                padding: "2px",
-              }}
-            >
-              Comment
-            </Button>
-          )}
-        </Box>
 
-        {/* <Typography variant="body2" color="text.secondary">
+          {/* <Typography variant="body2" color="text.secondary">
       {isTruncated && !showMore && (
         <span>{post.title.slice(0, 20)}...</span>
       )}
@@ -288,8 +288,9 @@ export default function PostCard({ post }) {
       
       {showMore && <Button onClick={handleShowMore}>Show less</Button>}
     </Typography> */}
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </>
   );
 }
 
