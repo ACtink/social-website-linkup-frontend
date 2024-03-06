@@ -21,6 +21,8 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
   const navigate = useNavigate();
   const postData = usePostData();
 
+  console.log("username before signin" , userName)
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -37,8 +39,13 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
         setIsLoggedIn(true);
         localStorage.setItem("isLoggedIn", "true");
 
-        setUserName(response.data.userName);
+        console.log(response.data.userName);
+       await setUserName(response.data.userName);
+          console.log("username after signin", userName);
+
         localStorage.setItem("userId", response.data.userId);
+        localStorage.setItem("userName", response.data.userName);
+
         setUserId(response.data.userId);
 
         navigate("/profile");

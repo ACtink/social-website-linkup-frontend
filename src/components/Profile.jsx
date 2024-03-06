@@ -14,11 +14,14 @@ function Profile({ isLoggedIn, setIsLoggedIn }) {
   const privateAxios = useAxiosForToken();
   const checkLoginStatus = localStorage.getItem("isLoggedIn") || false;
 
+
+  const user = localStorage.getItem("userName")
+
   useEffect(() => {
     const fetchUserPosts = async () => {
       try {
         privateAxios.defaults.withCredentials = true;
-        const response = await privateAxios.get("/posts/myposts");
+        const response = await privateAxios.get(`/posts/${user}`);
         if (response?.data) {
           console.log(response.data);
           setUserPosts(response.data);

@@ -11,6 +11,8 @@ import SignOut from "./components/SignOut";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import MyContext from "./context/ContextProvider";
 import { useSignOut } from "./utils/useSignOut";
+import ProfilePage from "./components/ProfilePage";
+import EditProfile from "./components/EditProfile";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -35,7 +37,7 @@ function App() {
         <ResponsiveAppBar isLoggedIn={isLoggedIn} />
 
         <Routes>
-      <Route path={"/"} element={isLoggedIn ? <AllPosts /> :<Home/>} />
+          <Route path={"/"} element={isLoggedIn ? <AllPosts /> : <Home />} />
 
           <Route
             path="/signin"
@@ -49,25 +51,52 @@ function App() {
               <SignOut isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
             }
           />
-       <Route path="/allposts" element={ isLoggedIn ? <AllPosts /> :<Home/>} />
-
+          <Route
+            path="/allposts"
+            element={isLoggedIn ? <AllPosts /> : <Home />}
+          />
 
           <Route
             path="/newpost"
             element={
-            isLoggedIn ?  <NewPost isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> :<Home/>
+              isLoggedIn ? (
+                <NewPost
+                  isLoggedIn={isLoggedIn}
+                  setIsLoggedIn={setIsLoggedIn}
+                />
+              ) : (
+                <Home />
+              )
             }
           />
 
-
-         <Route
+          <Route
             path="/profile"
             element={
-              
-              isLoggedIn ? <Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> : <Home/>}/>
-
+              isLoggedIn ? (
+                <Profile
+                  isLoggedIn={isLoggedIn}
+                  setIsLoggedIn={setIsLoggedIn}
+                />
+              ) : (
+                <Home />
+              )
+            }
+          />
 
           <Route path="/signup" element={<SignUp />} />
+          <Route
+            path="/profile/:user"
+            element={
+              <ProfilePage userName={userName} setUserName={setUserName} />
+            }
+          />
+          <Route
+            path="/editprofile"
+            element={
+              <EditProfile userName={userName} setUserName={setUserName} />
+            }
+          />
         </Routes>
       </MyContext.Provider>
     </div>

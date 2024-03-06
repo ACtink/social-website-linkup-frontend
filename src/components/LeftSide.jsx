@@ -11,9 +11,17 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Link, useLocation } from "react-router-dom";
 
-function LeftSide() {
+function LeftSide({userName}) {
   const location = useLocation();
   const [selectedItem, setSelectedItem] = useState(""); // State to keep track of selected item
+
+
+  console.log("username in left side" , userName)
+
+  let user = localStorage.getItem("userName")
+
+  console.log("user from local storage" , user)
+
 
   useEffect(() => {
     const pathname = location.pathname;
@@ -23,6 +31,9 @@ function LeftSide() {
         break;
       case "/profile":
         setSelectedItem("profile");
+        break;
+      case `/profile/${user}`:
+        setSelectedItem("profilepage");
         break;
       case "/newpost":
         setSelectedItem("newpost");
@@ -114,6 +125,31 @@ function LeftSide() {
               </ListItemAvatar>
               <ListItemText
                 primary="Profile"
+                sx={{ fontFamily: "Arial", fontWeight: 600 }}
+              />
+            </ListItem>
+          </Link>
+          <Link to={`/profile/${user}`} style={{ textDecoration: "none" }}>
+            <ListItem
+              button
+              sx={{
+                "&:hover": {
+                  backgroundColor: selectedItem !== "profilepage" && "#f0f0f0",
+                  borderRadius: "10px",
+                },
+                borderRadius: "10px",
+                backgroundColor:
+                  selectedItem === "profilepage" ? "#f0f0f0" : "transparent",
+              }}
+              onClick={() => setSelectedItem("profilepage")}
+            >
+              <ListItemAvatar>
+                <Avatar sx={{ backgroundColor: "#4caf50" }}>
+                  <AccountCircleIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Profile Page"
                 sx={{ fontFamily: "Arial", fontWeight: 600 }}
               />
             </ListItem>

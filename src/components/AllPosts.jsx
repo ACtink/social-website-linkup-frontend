@@ -79,7 +79,7 @@ function AllPosts() {
       }}
     >
       <LeftSide />
-      {loading && <Loading />}
+      {loading && <Loading marginValue={700} />}
       <MiddleSection posts={posts} setPosts={setPosts} error={error} />
       {reachedEnd && (
         <Box sx={{ marginBottom: "100px" }} textAlign="center">
