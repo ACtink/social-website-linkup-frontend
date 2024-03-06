@@ -16,6 +16,7 @@ import { usePostData } from "../utils/usePostData";
 import LikeButton from "./LikeButton";
 import SinglePostPage from "./SinglePostPage";
  import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 
 export default function PostCard({ post }) {
@@ -45,7 +46,7 @@ const modalHandler = () => {
 
 
   const [showMore, setShowMore] = React.useState(false);
-  const isTruncated = post.title.length > 20; 
+  const isTruncated = post.title.length > 80; 
 
   const handleShowMore = () => {
     setShowMore(!showMore);
@@ -139,18 +140,23 @@ const modalHandler = () => {
       >
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              {post.title.slice(0, 1)}
-            </Avatar>
+            <Link to={`/profile/${post.username}`}>
+              <Avatar
+                alt="Profile picture of the user who posted this post"
+                src={post.author.profilePic ? post.author.profilePic : "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg"}
+              />
+
+            </Link>
           }
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          }
+          // action={
+          //   <IconButton aria-label="settings">
+          //     <MoreVertIcon />
+          //   </IconButton>
+          // }
           title={post.username}
           subheader={formatTimeStamp(post.timestamp)}
         />
+
         <CardMedia
           onClick={modalHandler}
           component="img"
@@ -198,7 +204,10 @@ const modalHandler = () => {
                 fontWeight: 800,
               }}
             >
-              {post.username.charAt(0).toUpperCase() + post.username.slice(1)} -
+              <Link to={`/profile/${post.username}`}>
+                {post.username.charAt(0).toUpperCase() + post.username.slice(1)}
+                -
+              </Link>
             </Box>
           </Typography>
 

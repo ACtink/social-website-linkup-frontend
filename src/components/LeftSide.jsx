@@ -25,16 +25,18 @@ function LeftSide({userName}) {
 
   useEffect(() => {
     const pathname = location.pathname;
+    console.log(pathname)
     switch (pathname) {
       case "/allposts":
         setSelectedItem("allposts");
         break;
-      case "/profile":
-        setSelectedItem("profile");
-        break;
       case `/profile/${user}`:
         setSelectedItem("profilepage");
         break;
+      case "/profile":
+        setSelectedItem("profile");
+        break;
+
       case "/newpost":
         setSelectedItem("newpost");
         break;
@@ -67,6 +69,7 @@ function LeftSide({userName}) {
           marginTop: "100px",
           justifyContent: "center",
           alignItems: "center",
+
         }}
       >
         <List
@@ -131,7 +134,7 @@ function LeftSide({userName}) {
           </Link>
           <Link to={`/profile/${user}`} style={{ textDecoration: "none" }}>
             <ListItem
-              button
+             
               sx={{
                 "&:hover": {
                   backgroundColor: selectedItem !== "profilepage" && "#f0f0f0",

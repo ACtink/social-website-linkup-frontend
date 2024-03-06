@@ -37,7 +37,7 @@ function SinglePostPage({ post, isOpen, onClose }) {
             style={{
               width: "100%",
               height: "100%",
-              objectFit: "cover",
+              objectFit: "contain",
             }}
           />
         </Box>
@@ -72,7 +72,7 @@ function SinglePostPage({ post, isOpen, onClose }) {
           onClick={onClose}
           style={{
             position: "absolute",
-            top: "0px",
+            top: "50px",
             right: "100px",
             background: "#3f51b5", // Button background color
             color: "#fff", // Text color

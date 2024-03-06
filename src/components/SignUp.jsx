@@ -11,56 +11,53 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { usePostData } from "../utils/usePostData";
 import { useNavigate } from "react-router-dom";
- import  { useRef } from "react";
-
-
+import { useRef } from "react";
 
 export default function SignUp() {
   const navigate = useNavigate();
   const postData = usePostData();
-
-   const formRef = useRef(null);
-
-    const [error, setError] = React.useState("");
-
-    const [successMessage , setSuccessMessage] = React.useState("")
-
+  const formRef = useRef(null);
+  const [error, setError] = React.useState("");
+  const [successMessage, setSuccessMessage] = React.useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
 
+    const username = formData.get("username");
+
+  if (/\s/.test(username)) {
+    setError("Username cannot contain spaces.");
+    return;
+  }
+
     const data = {
-      username: formData.get("username"),
+      username: username,
       email: formData.get("email"),
       password: formData.get("password"),
     };
 
-        formRef.current.reset();
-
+    formRef.current.reset();
 
     try {
       const response = await postData("/auth/signup", data);
 
       if (response.data?.message) {
-
-        setSuccessMessage(`Successfully Signed Up ,Please`)
+        setError("")
+        setSuccessMessage("Successfully Signed Up. Please ");
 
         // navigate("/signin");
       }
     } catch (err) {
+      console.log(err);
 
- console.log(err);
-
- if (err.code === "ERR_NETWORK") {
-   setError("Something went Wrong on the server, please try after some time");
- } else {
-   setError(err?.response?.data?.message);
- }     
-
-
-
-      
+      if (err.code === "ERR_NETWORK") {
+        setError("Something went wrong on the server, please try again later.");
+      } else {
+        setError(
+          err?.response?.data?.message || "An error occurred during sign up."
+        );
+      }
     }
   };
 

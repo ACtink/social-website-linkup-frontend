@@ -26,6 +26,7 @@ function AllPosts() {
       if (response?.data.length === 0) {
         setReachedEnd(true);
       } else {
+        console.log(response.data)
         setPosts((prevPosts) => [...prevPosts, ...response.data]);
         setPage((prevPage) => prevPage + 1); // Use functional update to ensure correct value of page
       }

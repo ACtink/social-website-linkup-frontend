@@ -14,10 +14,11 @@ function EditProfile({ userName, setUserName }) {
   const [newUserName , setNewUserName] = useState(userName);
   const postFormData = usePostFormData();
 
-  const handleUsernameChange = (event) => {
-    const newName = event.target.value;
-    setNewUserName(newName);
-  };
+  // const handleUsernameChange = (event) => {
+  //   console.log("hhahahahhahah in handle username change function")
+  //   const newName = event.target.value;
+  //   setNewUserName(newName);
+  // };
 
   const handleAvatarChange = (event) => {
     setAvatar(event.target.files[0]);
@@ -34,6 +35,15 @@ function EditProfile({ userName, setUserName }) {
       const response = await postFormData(`/user/${userName}/editprofile`, formData);
       console.log("Profile updated successfully:", response.data);
       // Redirect user to profile page or display success message
+if(response.data){
+
+   navigate(-1);
+
+}
+     
+
+
+
     } catch (error) {
       console.error("Failed to update profile:", error);
       // Display error message to user
@@ -46,7 +56,11 @@ function EditProfile({ userName, setUserName }) {
 
   return (
     <Box sx={{ maxWidth: 400, margin: "auto", marginTop: "100px" }}>
-      <Button variant="contained" onClick={handleGoBack} sx={{ marginBottom: "20px" }}>
+      <Button
+        variant="contained"
+        onClick={handleGoBack}
+        sx={{ marginBottom: "20px" }}
+      >
         Back
       </Button>
       <form onSubmit={handleSubmit}>
@@ -60,13 +74,13 @@ function EditProfile({ userName, setUserName }) {
         <TextField
           id="username-input"
           fullWidth
-          value={userName}
-          onChange={handleUsernameChange}
+          value={newUserName}
           margin="normal"
           variant="outlined"
           size="large"
-          sx={{ marginBottom: "20px" }}
+          sx={{ marginBottom: "20px", opacity: 0.7, pointerEvents: "none" }} 
           required
+          readOnly // Use readOnly instead of read-only
         />
         <input
           type="file"

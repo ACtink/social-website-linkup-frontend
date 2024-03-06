@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import LeftSide from "./LeftSide";
-import MiddleSection from "./MiddleSection";
 import RightSide from "./RightSide";
 import { useAxiosForToken } from "../hooks/useAxiosForToken";
 import { useSignOut } from "../utils/useSignOut";
