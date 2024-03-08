@@ -14,104 +14,51 @@ function ProfilePage({ userName, setUserName }) {
   const [userPosts, setUserPosts] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showFollowers , setShowFollowers] = useState(false)
-    const [showFollowing, setShowFollowing] = useState(false);
-
-    const [youAreAFollower , setYouAreAfollower] = useState(false)
-        // const [isFollowing, setIsFollowing] = useState(false);
-
-
+  const [modalType, setModalType] = useState(null); // State to manage modal type
+  const [youAreAFollower, setYouAreAFollower] = useState(false);
   const privateAxios = useAxiosForToken();
-
-  let { user } = useParams();
+  const { user } = useParams();
   const loggedInUser = localStorage.getItem("userName");
-
   const [noPostMessage, setNoPostMessage] = useState("");
-
-
   const postData = usePostData();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-   const [isModalOpen, setIsModalOpen] = React.useState(false);
-
-   const modalHandler = () => {
-     setIsModalOpen(!isModalOpen);
-   };
-
-
-
-  const handleFollow = async () => {
-    // Logic to handle the follow action
-
-
-    try{
-
-    
-
-     const response =  await postData(`/user/${userProfile.username}/follow`);
-
-
-     if(response?.data){
-      console.log("User followed");
-      setYouAreAfollower(!youAreAFollower)
-
-      await fetchUserProfile()
-
-     }
-
-     }catch(err){
-      console.log(err)
-     }
-
-
+  const modalHandler = (type) => {
+    setModalType(type);
+    setIsModalOpen(!isModalOpen);
   };
 
-    const handleUnFollow = async () => {
-      // Logic to handle the follow action
-
-      try {
-        const response = await postData(`/user/${userProfile.username}/unfollow`);
-
-        if (response?.data) {
-          console.log("User unfollowed");
-
-                setYouAreAfollower(!youAreAFollower);
-
-
-             await fetchUserProfile();
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
+ const handleFollowToggle = async () => {
+   try {
+     const response = await postData(
+       `/user/${userProfile.username}/${
+         youAreAFollower ? "unfollow" : "follow"
+       }`
+     );
+     if (response?.data) {
+       console.log(youAreAFollower ? "User unfollowed" : "User followed");
+       setYouAreAFollower(!youAreAFollower);
+       fetchUserProfileAndPosts(); // Fetch user profile and posts after updating follow status
+     }
+   } catch (err) {
+     console.log(err);
+   }
+ };
 
 
-
-
-  const fetchUserProfile = async () => {
+  const fetchUserProfileAndPosts = async () => {
     try {
       privateAxios.defaults.withCredentials = true;
       const response = await privateAxios.get(`/user/${user}`);
-
       setUserProfile(response.data);
-      console.log(response.data);
       setError("");
-
       if (
         response.data.followers.find(
           (person) => person.username === loggedInUser
         )
       ) {
-        setYouAreAfollower(true);
-        console.log(youAreAFollower);
+        setYouAreAFollower(true);
       }
-
-      //  if (response.data.following.find((person) => person.username === loggedInUser)) {
-      //    setIsFollowing(true);
-      //             console.log(isFollowing);
-
-      //  }
-
       return true;
     } catch (error) {
       setError("Failed to fetch user profile.");
@@ -132,61 +79,37 @@ function ProfilePage({ userName, setUserName }) {
       }
       setError("");
     } catch (error) {
-      console.log(error);
       setError("Failed to fetch user posts.");
     }
   };
 
-  
-
-
-
-
-
-
-
-
   useEffect(() => {
-
-   const fetchUserProfileAndPosts = async()=>{
-   const result = await fetchUserProfile()
-
-   if (result) {
-   await fetchUserPosts();
-  }
-
-
+    async function fetchData() {
+      const result =  fetchUserProfileAndPosts();
+      if (result) {
+        await fetchUserPosts();
+      }
     }
-    fetchUserProfileAndPosts()
-
-    
-    
+    fetchData();
   }, [user]);
 
   return (
-    <>
-      {showFollowers && (
-        <ModalThatShowsList
-          listData={userProfile.followers}
-          listType={"followers"}
-          isOpen={isModalOpen}
-          onClose={modalHandler}
-        />
-      )}
-      {showFollowing && (
-        <ModalThatShowsList
-          listData={userProfile.following}
-          listType={"following"}
-          isOpen={isModalOpen}
-          onClose={modalHandler}
-        />
-      )}
+    <Box>
+      <ModalThatShowsList
+        listData={
+          modalType === "followers"
+            ? userProfile?.followers
+            : userProfile?.following
+        }
+        listType={modalType}
+        isOpen={isModalOpen}
+        onClose={modalHandler}
+      />
       <Box sx={{ padding: "20px", position: "relative" }}>
         <Box
           sx={{
             position: "absolute",
             right: "0",
-
             maxWidth: { xs: "100%", sm: "100%", md: "76%" },
             minWidth: { xs: "100%", sm: "100%", md: "76%" },
           }}
@@ -222,12 +145,10 @@ function ProfilePage({ userName, setUserName }) {
                     }
                     alt="User Avatar"
                     style={{
-                      width: "150px", // Ensure the image takes up the full width of the container
+                      width: "150px",
                       height: "150px",
                       borderRadius: "50%",
                       objectFit: "cover",
-
-                      // Ensure the image takes up the full height of the container
                     }}
                   />
                 </Box>
@@ -236,41 +157,26 @@ function ProfilePage({ userName, setUserName }) {
                 <Typography variant="h5">{userProfile.username}</Typography>
                 <Typography
                   variant="subtitle1"
-                  onClick={() => {
-                    setShowFollowers(true);
-                    modalHandler();
-                  }}
+                  onClick={() => modalHandler("followers")}
                   sx={{ marginBottom: "5px", cursor: "pointer" }}
                 >
-                  {/* <Link to={`/profile/${userProfile.username}/followers`}>
-                    {" "} */}
-                  Followers: {userProfile.followers.length} {/* </Link> */}
+                  Followers: {userProfile.followers.length}
                 </Typography>
                 <Typography
                   variant="subtitle1"
                   sx={{ marginBottom: "20px", cursor: "pointer" }}
-                  onClick={() => {
-                    setShowFollowing(true);
-                    modalHandler();
-                  }}
+                  onClick={() => modalHandler("following")}
                 >
                   Following: {userProfile.following.length}
                 </Typography>
-                {/* Follow Button */}
-                {loggedInUser !== user &&
-                  !youAreAFollower &&(
-                    <Button variant="contained" onClick={handleFollow}>
-                      Follow
-                    </Button>
-                  )}
-                {loggedInUser !== user &&
-                  youAreAFollower && ( 
-                    <Button variant="contained" onClick={handleUnFollow}>
-                      Unfollow
-                    </Button>
-                  )}
+                {/* Follow/Unfollow Button */}
+                {loggedInUser !== user && (
+                  <Button variant="contained" onClick={handleFollowToggle}>
+                    {youAreAFollower ? "Unfollow" : "Follow"}
+                  </Button>
+                )}
                 {/* Edit Profile Button */}
-                {loggedInUser === user &&  (
+                {loggedInUser === user && (
                   <Link to="/editprofile" underline="none">
                     <Button variant="outlined" sx={{ marginTop: "10px" }}>
                       Edit Profile
@@ -285,10 +191,6 @@ function ProfilePage({ userName, setUserName }) {
 
           <Box
             sx={{
-              // maxWidth: { xs: "100%", sm: "90%", md: "76%" },
-              // minWidth: { xs: "100%", sm: "90%", md: "76%" },
-              // position: "absolute",
-              // right: "0px",
               marginTop: "50px",
               padding: "10px",
             }}
@@ -302,16 +204,9 @@ function ProfilePage({ userName, setUserName }) {
               }}
             ></Box>
 
-            {/* <Typography
-            variant="h4"
-            sx={{ marginTop: "20px", marginBottom: "20px" }}
-          >
-            Posts
-          </Typography> */}
-
             {loading && <Loading marginValue={170} />}
 
-            {userPosts.length > 0 && (
+            {userPosts && userPosts.length > 0 && (
               <Grid container spacing={3} paddingBottom="50px">
                 {userPosts.map((post, index) => (
                   <PostItem key={index} post={post} index={index} />
@@ -333,7 +228,7 @@ function ProfilePage({ userName, setUserName }) {
           </Box>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }
 
