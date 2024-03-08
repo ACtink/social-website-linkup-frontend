@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import SinglePostPage from "./SinglePostPage";
 
 function PostItem({ post, index }) {
@@ -34,7 +34,7 @@ function PostItem({ post, index }) {
               height: "200px",
               objectFit: "contain",
               borderRadius: "8px",
-              cursor:"pointer",
+              cursor: "pointer",
             }}
           />
         </div>
