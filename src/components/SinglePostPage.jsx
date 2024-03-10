@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, Typography, Avatar } from "@mui/material";
 
 function SinglePostPage({ post, isOpen, onClose }) {
   return (
@@ -42,31 +42,49 @@ function SinglePostPage({ post, isOpen, onClose }) {
           />
         </Box>
         <Box
-  sx={{
-    flex: "0 0 30%",
-    padding: "0 20px",
-  }}
->
-  <Typography variant="h6" sx={{ marginBottom: 2 }}>Comments and Likes</Typography>
-  <Box sx={{ marginTop: 2 }}>
-    <Typography variant="subtitle1">
-      Total Likes: {post.likes}
-    </Typography>
-    <Typography variant="subtitle1" sx={{ marginTop: 2, fontWeight: 'bold' }}>Comments:</Typography>
-    <ul style={{ paddingLeft: 0 }}>
-      {post.comments.map((comment, index) => (
-        <li key={index} style={{ marginBottom: '8px', backgroundColor: '#f5f5f5', padding: '8px', borderRadius: '8px' }}>
-          <Typography variant="body1">
-            <strong style={{ color: '#1976D2' }}>{comment.username || comment.author}</strong>: {comment.content}
+          sx={{
+            flex: "0 0 30%",
+            padding: "0 20px",
+          }}
+        >
+          <Typography variant="h6" sx={{ marginBottom: 2 }}>
+            Comments and Likes
           </Typography>
-        </li>
-      ))}
-    </ul>
-  </Box>
-
-
-
-      
+         
+          <Box sx={{ marginTop: 2 }}>
+            <Typography variant="subtitle1">
+              Total Likes: {post.likes}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{ marginTop: 2, fontWeight: "bold" }}
+            >
+              Comments:
+            </Typography>
+            <ul style={{ paddingLeft: 0 }}>
+              {post?.comments?.map((comment, index) => (
+                <li
+                  key={index}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: "8px",
+                    backgroundColor: "#f5f5f5",
+                    padding: "8px",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <Avatar src={comment?.author?.profilePic} sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">
+                    <strong style={{ color: "#1976D2" }}>
+                      {comment?.author.username || comment?.username}
+                    </strong>
+                    : {comment?.content}
+                  </Typography>
+                </li>
+              ))}
+            </ul>
+          </Box>
         </Box>
         <Button
           onClick={onClose}

@@ -34,6 +34,7 @@ function SignOutButton({ handleSubmit }) {
           padding: "20px",
           marginBottom: "20px",
           boxShadow: "0px 8px 15prgba(0, 0, 0, 0.1)",
+          borderRadius:"10px"
         }}
       >
         <CardContent>
