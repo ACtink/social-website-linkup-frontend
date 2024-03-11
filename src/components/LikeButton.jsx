@@ -9,33 +9,44 @@ import { usePostData } from "../utils/usePostData";
 import MyContext from "../context/ContextProvider";
 import { useGetData } from "../utils/useGetData";
 
-const LikeButton = ({ post, setTotalLikes }) => {
+const LikeButton = ({ post, setTotalLikes , setIsLikesUpdated , isLikesUpdated }) => {
   const [userName, setUserName, userId, setUserId] =
     React.useContext(MyContext);
   const getData = useGetData();
   const postId = post._id;
-  const isAlreadyLiked = post.likesArray.some((like) => like.author === userId);
+  const isAlreadyLiked = post.likesArray.some((like) => like.author._id === userId);
   const deleteData = useDeleteData();
   const postData = usePostData();
   const [liked, setLiked] = useState(isAlreadyLiked);
-
-  const handleLike = async () => {
-    try {
-      if (liked) {
-        // Unlike post
-        setTotalLikes((prev) => prev - 1);
-        await deleteData(`/posts/${postId}/like`);
-      } else {
-        // Like post
-        setTotalLikes((prev) => prev + 1);
-        await postData(`/posts/${postId}/like`);
+const handleLike = async () => {
+  try {
+    if (liked) {
+      // Unlike post
+      setTotalLikes((prev) => prev - 1);
+      const response = await deleteData(`/posts/${postId}/like`);
+      console.log(" deleted ", response.data.likesCount);
+      setIsLikesUpdated(true);
+      if (response.data) {
+        
       }
-      // Toggle like state
-      setLiked((prevLiked) => !prevLiked);
-    } catch (error) {
-      console.error("Error:", error);
+    } else {
+      // Like post
+      setTotalLikes((prev) => prev + 1);
+      const response = await postData(`/posts/${postId}/like`);
+      console.log(" created ", response.data.likesCount);
+      setIsLikesUpdated(true);
+      if (response.data) {
+
+      }
     }
-  };
+    // Toggle like state
+    setLiked((prevLiked) => !prevLiked);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+
 
   return (
     <IconButton

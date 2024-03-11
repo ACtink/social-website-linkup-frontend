@@ -23,12 +23,17 @@ function SinglePostPage({ post, isOpen, onClose }) {
           outline: "none",
           display: "flex",
           flexDirection: "row",
+          borderRadius:"5px"
         }}
         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
       >
         <Box
           style={{
             flex: "0 0 70%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            overflow: "hidden",
           }}
         >
           <img
@@ -37,7 +42,7 @@ function SinglePostPage({ post, isOpen, onClose }) {
             style={{
               width: "100%",
               height: "100%",
-              objectFit: "contain",
+              objectFit: "cover",
             }}
           />
         </Box>
@@ -50,7 +55,7 @@ function SinglePostPage({ post, isOpen, onClose }) {
           <Typography variant="h6" sx={{ marginBottom: 2 }}>
             Comments and Likes
           </Typography>
-         
+
           <Box sx={{ marginTop: 2 }}>
             <Typography variant="subtitle1">
               Total Likes: {post.likes}
@@ -74,7 +79,10 @@ function SinglePostPage({ post, isOpen, onClose }) {
                     borderRadius: "8px",
                   }}
                 >
-                  <Avatar src={comment?.author?.profilePic} sx={{ marginRight: 1 }} />
+                  <Avatar
+                    src={comment?.author?.profilePic}
+                    sx={{ marginRight: 1 }}
+                  />
                   <Typography variant="body1">
                     <strong style={{ color: "#1976D2" }}>
                       {comment?.author.username || comment?.username}

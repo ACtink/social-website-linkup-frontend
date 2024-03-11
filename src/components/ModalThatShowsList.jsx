@@ -63,7 +63,11 @@ import {
 // export default ModalThatShowsList;
 function ModalThatShowsList({ listData, listType, isOpen, onClose }) {
   return (
-    <Modal open={isOpen} onClose={onClose} sx={{display:"flex", justifyContent:"center" , alignItems:"center"}}>
+    <Modal
+      open={isOpen}
+      onClose={onClose}
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+    >
       <Box
         style={{
           backgroundColor: "#fff",
@@ -74,26 +78,26 @@ function ModalThatShowsList({ listData, listType, isOpen, onClose }) {
           outline: "none",
           display: "flex",
           flexDirection: "column",
-          
         }}
       >
         <Typography variant="h5" sx={{ marginBottom: 2 }}>
-          {listType === "followers" ? "Followers" : "Following"} List
+          {/* {listType === "followers" ? "Followers" : "Following"} List */}
+          {listType} List
         </Typography>
         {listData && listData.length > 0 ? (
           <List style={{ flex: "1", overflowY: "auto" }}>
             {listData.map((item, index) => (
               <ListItem key={index} sx={{ borderBottom: "1px solid #ccc" }}>
                 <ListItemAvatar>
-                  <Avatar src={item.profilePic} />
+                  <Avatar src={item.author ? item.author.profilePic: item.profilePic} />
                 </ListItemAvatar>
-                <ListItemText primary={item.username} />
+                <ListItemText primary={item.author ? item.author.username : item.username} />
               </ListItem>
             ))}
           </List>
         ) : (
           <Typography>
-            No {listType === "followers" ? "followers" : "following"} to display
+            No {listType} to display
           </Typography>
         )}
         <Button

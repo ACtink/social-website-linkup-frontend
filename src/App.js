@@ -13,12 +13,14 @@ import MyContext from "./context/ContextProvider";
 import { useSignOut } from "./utils/useSignOut";
 import ProfilePage from "./components/ProfilePage";
 import EditProfile from "./components/EditProfile";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     Boolean(localStorage.getItem("isLoggedIn")) || false
   );
 
+  const navigate = useNavigate()
 
   const [userName , setUserName]  = useState((localStorage.getItem("userName")) || "Guest")
 
@@ -28,6 +30,7 @@ function App() {
 
   if(!isLoggedIn){
     signOut()
+
   }
 
 
