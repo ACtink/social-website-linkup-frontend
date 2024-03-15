@@ -23,7 +23,7 @@ function SinglePostPage({ post, isOpen, onClose }) {
           outline: "none",
           display: "flex",
           flexDirection: "row",
-          borderRadius:"5px"
+          borderRadius: "5px",
         }}
         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
       >
@@ -43,6 +43,8 @@ function SinglePostPage({ post, isOpen, onClose }) {
               width: "100%",
               height: "100%",
               objectFit: "cover",
+              verticalAlign: "middle",
+              display:"block"
             }}
           />
         </Box>

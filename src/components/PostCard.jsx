@@ -163,7 +163,6 @@ export default function PostCard({ post }) {
           minWidth: { xs: "100%", sm: "90%", md: "70%" },
           boxShadow: "0px 4px 8px rgba(38, 38, 38, 0.2)",
           transition: "transform 0.3s ease-in-out",
-          
         }}
       >
         <CardHeader
@@ -188,11 +187,24 @@ export default function PostCard({ post }) {
           component="img"
           image={post.photoUrl}
           alt="Tree in snow"
+          // sx={{
+          //   width: "100%",
+          //   maxHeight: { md: "30rem", xs: "32rem" },
+          //   objectFit: { md: "contain", sm: "cover", xs: "cover" },
+          //   padding: "1rem",
+          // }}
+
           sx={{
-            width: "100%",
-            maxHeight: { md: "30rem", xs: "32rem" },
-            objectFit: { md: "contain", sm: "cover", xs: "cover" },
-            padding: "1rem",
+            display: "block",
+            verticalAlign: "middle",
+            maxWidth: "100%",
+            height: "auto",
+            borderStyle: "none",
+            backgroundSize:"cover",
+            backgroundRepeat:"no-repeat",
+            imageRendering:"smooth",
+            fontStyle:"italic",
+            shapeMargin:"1rem"
           }}
         />
 

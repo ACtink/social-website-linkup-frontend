@@ -5,6 +5,7 @@ import RightSide from "./RightSide";
 import { useAxiosForToken } from "../hooks/useAxiosForToken";
 import { useSignOut } from "../utils/useSignOut";
 import RenderPosts from "./RenderPosts";
+import { useNavigate } from "react-router-dom";
 
 function Profile({ isLoggedIn, setIsLoggedIn }) {
   const [userPosts, setUserPosts] = useState(null);
@@ -15,6 +16,11 @@ function Profile({ isLoggedIn, setIsLoggedIn }) {
 
 
   const user = localStorage.getItem("userName")
+    const navigate = useNavigate();
+
+  if(!isLoggedIn){
+    navigate("/")
+  }
 
   useEffect(() => {
     const fetchUserPosts = async () => {
@@ -28,7 +34,7 @@ function Profile({ isLoggedIn, setIsLoggedIn }) {
         }
       } catch (err) {
         if (err.response?.data) {
-          console.log("in catch ");
+          console.log("calling singout now ");
           signOut();
           setError(err.response?.data.message);
         } else {

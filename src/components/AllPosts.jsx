@@ -5,6 +5,7 @@ import RightSide from "./RightSide";
 import { Box } from "@mui/material";
 import MiddleSection from "./MiddleSection";
 import Loading from "./Loading";
+import { useAxiosForToken } from "../hooks/useAxiosForToken";
 
 function AllPosts() {
   const [error, setError] = useState("");
@@ -12,6 +13,9 @@ function AllPosts() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [reachedEnd, setReachedEnd] = useState(false);
+
+    const privateAxios = useAxiosForToken();
+
 
   const fetchPosts = async () => {
 
@@ -22,11 +26,13 @@ function AllPosts() {
     try {
 
       console.log("calling getpost with page value" , page)
-      const response = await axios.get(`/posts?page=${page}&limit=10`);
+      privateAxios.defaults.withCredentials = true;
+      const response = await privateAxios.get(`/posts?page=${page}&limit=10`);
       if (response?.data.length === 0) {
         setReachedEnd(true);
       } else {
         console.log(response.data)
+              setError("");
         setPosts((prevPosts) => [...prevPosts, ...response.data]);
         setPage((prevPage) => prevPage + 1); // Use functional update to ensure correct value of page
       }

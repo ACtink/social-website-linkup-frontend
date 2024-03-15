@@ -29,8 +29,6 @@ function App() {
   const signOut = useSignOut(isLoggedIn , setIsLoggedIn)
 
   if(!isLoggedIn){
-    signOut()
-
   }
 
 

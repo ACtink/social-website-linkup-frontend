@@ -19,16 +19,14 @@ export function useSignOut({isLoggedIn, setIsLoggedIn}) {
       const response = await axios.post("/auth/signout");
   
       if (response?.data) {
-        console.log("running in signout.......if conditon ")
+        console.log("running in signout.......if conditon ");
         localStorage.clear()
-        setIsLoggedIn(!isLoggedIn)
+        // setIsLoggedIn(false)
 
-        console.log(isLoggedIn)
+        console.log("is logged in ka value after signout", isLoggedIn);
 
-
-        console.log("Data from the server:", response?.data);
-        navigate("/")
-
+        console.log("after signout out console hai ye", response?.data);
+         window.location.reload();
       }
   
     } catch (err) {

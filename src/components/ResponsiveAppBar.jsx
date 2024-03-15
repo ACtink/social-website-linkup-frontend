@@ -17,7 +17,9 @@ const settings = [
   { value: "SignIn", showOnLoggedin: false },
   { value: "SignUp", showOnLoggedin: false },
   { value: "NewPost", showOnLoggedin: true },
-  { value: "AllPosts", showOnLoggedin: false },
+  { value: "", showOnLoggedin: false },
+  { value: "", showOnLoggedin: true },
+
   { value: "AllPosts", showOnLoggedin: true },
   { value: "SignOut", showOnLoggedin: true },
 ];
@@ -105,7 +107,9 @@ function ResponsiveAppBar({ isLoggedIn }) {
                         <Typography textAlign="center">
                           {isLoggedIn && setting.showOnLoggedin && (
                             <Link to={`/${setting.value.toLowerCase()}`}>
-                              {setting.showOnLoggedin && setting.value}
+                              {setting.showOnLoggedin && setting.value
+                                ? setting.value
+                                : "Home"}
                             </Link>
                           )}
                         </Typography>
@@ -121,7 +125,9 @@ function ResponsiveAppBar({ isLoggedIn }) {
                         <Typography textAlign="center">
                           {!isLoggedIn && !setting.showOnLoggedin && (
                             <Link to={`/${setting.value.toLowerCase()}`}>
-                              {!setting.showOnLoggedin && setting.value}
+                              {!setting.showOnLoggedin && setting.value
+                                ? setting.value
+                                : "Home"}
                             </Link>
                           )}
                         </Typography>
