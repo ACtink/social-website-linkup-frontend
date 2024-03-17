@@ -6,7 +6,10 @@ import axios from "axios"
 console.log("this is process.env" , process.env.NODE_ENV)
 
 
-const baseURL = process.env.NODE_ENV === 'production' ? "https://linkup-backend-service.onrender.com/api" : 'http://localhost:5000/api'
+const baseURL =
+  process.env.NODE_ENV === "production"
+    ? "https://backend.weblinkup.online/api"
+    : "http://localhost:5000/api";
 
 axios.defaults.baseURL = baseURL;
 

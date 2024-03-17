@@ -11,21 +11,37 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import PublicIcon from '@mui/icons-material/Public';
+import { useAxiosForToken } from "../hooks/useAxiosForToken";
 
 const settings = [
+  { value: "", showOnLoggedin: false },
+  { value: "", showOnLoggedin: true },
   { value: "Profile", showOnLoggedin: true },
   { value: "SignIn", showOnLoggedin: false },
   { value: "SignUp", showOnLoggedin: false },
   { value: "NewPost", showOnLoggedin: true },
-  { value: "", showOnLoggedin: false },
-  { value: "", showOnLoggedin: true },
 
   { value: "AllPosts", showOnLoggedin: true },
   { value: "SignOut", showOnLoggedin: true },
 ];
 
+
+
+
+
+
+
 function ResponsiveAppBar({ isLoggedIn }) {
   const [anchorElUser, setAnchorElUser] = React.useState();
+
+    const privateAxios = useAxiosForToken();
+
+      const [userName, setUserName] = React.useState(
+        localStorage.getItem("userName") || "Guest"
+      );
+
+      const [userProfile , setUserProfile]  = React.useState({})
+console.log(userName)
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -40,6 +56,44 @@ function ResponsiveAppBar({ isLoggedIn }) {
 
 
   },[isLoggedIn])
+
+
+
+ React.useEffect(() => {
+   const getUserProfile = async () => {
+     try {
+       privateAxios.defaults.withCredentials = true;
+
+       const response = await privateAxios.get(`/user/${userName}`);
+
+       if (response.data) {
+       
+         setUserProfile(response.data)
+
+         console.log(userProfile)
+       }
+     } catch (err) {
+       console.log(err);
+     }
+   };
+
+   getUserProfile()
+ 
+ }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <AppBar
@@ -80,7 +134,15 @@ function ResponsiveAppBar({ isLoggedIn }) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
+                <Avatar
+                  alt="Profile picture of the user who posted this post"
+                  src={
+                    userProfile.profilePic
+                      ? userProfile.profilePic
+                      : "G"
+                  }
+                />
               </IconButton>
             </Tooltip>
             <Menu
