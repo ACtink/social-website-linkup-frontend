@@ -107,7 +107,7 @@ function LeftSide({userName}) {
               />
             </ListItem>
           </Link>
-          <Link to={"/profile"} style={{ textDecoration: "none" }}>
+          {/* <Link to={"/profile"} style={{ textDecoration: "none" }}>
             <ListItem
               button
               sx={{
@@ -131,7 +131,7 @@ function LeftSide({userName}) {
                 sx={{ fontFamily: "Arial", fontWeight: 600 }}
               />
             </ListItem>
-          </Link>
+          </Link> */}
           <Link to={`/profile/${user}`} style={{ textDecoration: "none" }}>
             <ListItem
              

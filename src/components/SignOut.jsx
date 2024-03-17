@@ -4,9 +4,13 @@ import LeftSide from "./LeftSide";
 import RightSide from "./RightSide";
 import SignOutButton from "./SignOutButton";
 import { useNavigate } from "react-router-dom";
+import MyContext from "../context/ContextProvider";
 
 function SignOut({ isLoggedIn, setIsLoggedIn }) {
   const navigate = useNavigate();
+
+  const [userName, setUserName, userId, setUserId , setUserProfile] =
+    React.useContext(MyContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,6 +23,7 @@ function SignOut({ isLoggedIn, setIsLoggedIn }) {
 
       if (response.data) {
         localStorage.clear();
+        setUserProfile({})
         setIsLoggedIn(false);
 
         const data = await response.data;

@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import NewPost from "./components/NewPost";
 import Home from "./components/Home";
@@ -13,29 +13,81 @@ import MyContext from "./context/ContextProvider";
 import { useSignOut } from "./utils/useSignOut";
 import ProfilePage from "./components/ProfilePage";
 import EditProfile from "./components/EditProfile";
-import { useNavigate } from "react-router-dom";
+import { useAxiosForToken } from "./hooks/useAxiosForToken";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     Boolean(localStorage.getItem("isLoggedIn")) || false
   );
 
-  const navigate = useNavigate()
+
+      const privateAxios = useAxiosForToken();
+
+
 
   const [userName , setUserName]  = useState((localStorage.getItem("userName")) || "Guest")
 
   const [userId , setUserId] = useState((localStorage.getItem("userId")) || null)
 
+  const [profilePicture , setProfilePicture]  = useState("")
+
   const signOut = useSignOut(isLoggedIn , setIsLoggedIn)
 
-  if(!isLoggedIn){
-  }
+
+
+    const [userProfile, setUserProfile] = React.useState({});
+
+
+console.log("ye userprofile hai shuru me " , userProfile)
+
+
+
+
+
+React.useEffect(() => {
+  const getUserProfile = async () => {
+    try {
+      privateAxios.defaults.withCredentials = true;
+
+      const response = await privateAxios.get(`/user/${userName}`);
+
+      if (response.data) {
+        setUserProfile(response.data);
+
+        setProfilePicture(response.data.profilePicture)
+
+        console.log("profile aagayi hai bhai fetch hokar")
+
+        console.log(userProfile);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  getUserProfile();
+}, [userName, profilePicture]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   return (
     <div className="App">
-      <MyContext.Provider value={[userName, setUserName, userId, setUserId]}>
-        <ResponsiveAppBar isLoggedIn={isLoggedIn} />
+      <MyContext.Provider value={[userName, setUserName, userId, setUserId , setUserProfile, setProfilePicture]}>
+        <ResponsiveAppBar isLoggedIn={isLoggedIn} userProfile={userProfile} setUserProfile={setUserProfile}  />
 
         <Routes>
           <Route path={"/"} element={isLoggedIn ? <AllPosts /> : <Home />} />

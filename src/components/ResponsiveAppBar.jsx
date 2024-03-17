@@ -13,16 +13,27 @@ import { Link } from "react-router-dom";
 import PublicIcon from '@mui/icons-material/Public';
 import { useAxiosForToken } from "../hooks/useAxiosForToken";
 
-const settings = [
-  { value: "", showOnLoggedin: false },
-  { value: "", showOnLoggedin: true },
-  { value: "Profile", showOnLoggedin: true },
-  { value: "SignIn", showOnLoggedin: false },
-  { value: "SignUp", showOnLoggedin: false },
-  { value: "NewPost", showOnLoggedin: true },
 
-  { value: "AllPosts", showOnLoggedin: true },
-  { value: "SignOut", showOnLoggedin: true },
+
+
+
+
+
+
+function ResponsiveAppBar({ isLoggedIn , userProfile, setUserProfile  }) {
+
+
+
+const settings = [
+  { value: "", link: "/", showOnLoggedin: false },
+  { value: "", link: "/", showOnLoggedin: true },
+  { value: `Profile`, link: `/profile/${userProfile.username}`, showOnLoggedin: true },
+  { value: "SignIn", link: "/signin", showOnLoggedin: false },
+  { value: "SignUp", link: "/signup", showOnLoggedin: false },
+  { value: "NewPost", link: "/newpost", showOnLoggedin: true },
+
+  { value: "AllPosts", link: "/allposts" , showOnLoggedin: true },
+  { value: "SignOut", link: "/signout" , showOnLoggedin: true },
 ];
 
 
@@ -31,18 +42,24 @@ const settings = [
 
 
 
-function ResponsiveAppBar({ isLoggedIn }) {
+
+
+
+
+
+
+
+
+
+
   const [anchorElUser, setAnchorElUser] = React.useState();
 
-    const privateAxios = useAxiosForToken();
 
       const [userName, setUserName] = React.useState(
         localStorage.getItem("userName") || "Guest"
       );
 
-      const [userProfile , setUserProfile]  = React.useState({})
-console.log(userName)
-
+    
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -52,34 +69,14 @@ console.log(userName)
   };
 
 
-  React.useEffect(()=>{
+  // React.useEffect(()=>{
 
 
-  },[isLoggedIn])
+  // },[isLoggedIn ])
 
 
 
- React.useEffect(() => {
-   const getUserProfile = async () => {
-     try {
-       privateAxios.defaults.withCredentials = true;
-
-       const response = await privateAxios.get(`/user/${userName}`);
-
-       if (response.data) {
-       
-         setUserProfile(response.data)
-
-         console.log(userProfile)
-       }
-     } catch (err) {
-       console.log(err);
-     }
-   };
-
-   getUserProfile()
  
- }, []);
 
 
 
@@ -132,7 +129,7 @@ console.log(userName)
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Menu">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
                 <Avatar
@@ -140,7 +137,7 @@ console.log(userName)
                   src={
                     userProfile.profilePic
                       ? userProfile.profilePic
-                      : "G"
+                      : "https://static.vecteezy.com/system/resources/previews/004/819/327/original/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg"
                   }
                 />
               </IconButton>
@@ -168,7 +165,7 @@ console.log(userName)
                       <MenuItem key={indx} onClick={handleCloseUserMenu}>
                         <Typography textAlign="center">
                           {isLoggedIn && setting.showOnLoggedin && (
-                            <Link to={`/${setting.value.toLowerCase()}`}>
+                            <Link to={`${setting.link}`}>
                               {setting.showOnLoggedin && setting.value
                                 ? setting.value
                                 : "Home"}
@@ -186,7 +183,7 @@ console.log(userName)
                       <MenuItem key={indx} onClick={handleCloseUserMenu}>
                         <Typography textAlign="center">
                           {!isLoggedIn && !setting.showOnLoggedin && (
-                            <Link to={`/${setting.value.toLowerCase()}`}>
+                            <Link to={`${setting.link}`}>
                               {!setting.showOnLoggedin && setting.value
                                 ? setting.value
                                 : "Home"}

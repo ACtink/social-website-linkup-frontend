@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 function EditProfile({ userName, setUserName }) {
   const navigate = useNavigate(); // Initialize useHistory
 
+  const [ , , userId, setUserId, setUserProfile, setProfilePicture] =
+    React.useContext(MyContext);
+
  
 
   const [avatar, setAvatar] = useState(null);
@@ -36,6 +39,8 @@ function EditProfile({ userName, setUserName }) {
       console.log("Profile updated successfully:", response.data);
       // Redirect user to profile page or display success message
 if(response.data){
+
+  setProfilePicture(response.data.profilePic)
 
    navigate(-1);
 

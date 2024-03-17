@@ -71,7 +71,7 @@ function ProfilePage({ userName, setUserName }) {
       setLoading(true);
       privateAxios.defaults.withCredentials = true;
       const response = await privateAxios.get(`/posts/${user}`);
-      await new Promise((res) => setTimeout(res, 2000));
+      await new Promise((res) => setTimeout(res, 1000));
       setLoading(false);
       setUserPosts(response.data);
       if (response.data.length === 0) {

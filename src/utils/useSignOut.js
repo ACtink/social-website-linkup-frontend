@@ -20,6 +20,7 @@ export function useSignOut({isLoggedIn, setIsLoggedIn}) {
   
       if (response?.data) {
         console.log("running in signout.......if conditon ");
+        
         localStorage.clear()
         // setIsLoggedIn(false)
 
