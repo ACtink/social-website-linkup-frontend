@@ -39,7 +39,7 @@ export default function NewPost({ isLoggedIn, setIsLoggedIn }) {
       const response = await postFormData("/posts/createpost", data);
 
       if (response.data.message) {
-        navigate("/profile");
+        navigate("/allposts");
       }
     } catch (err) {
       if (err.response.status === "401") {

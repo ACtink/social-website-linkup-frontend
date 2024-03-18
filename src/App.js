@@ -14,6 +14,7 @@ import { useSignOut } from "./utils/useSignOut";
 import ProfilePage from "./components/ProfilePage";
 import EditProfile from "./components/EditProfile";
 import { useAxiosForToken } from "./hooks/useAxiosForToken";
+import NotFound from "./components/NotFoundPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -86,8 +87,21 @@ React.useEffect(() => {
 
   return (
     <div className="App">
-      <MyContext.Provider value={[userName, setUserName, userId, setUserId , setUserProfile, setProfilePicture]}>
-        <ResponsiveAppBar isLoggedIn={isLoggedIn} userProfile={userProfile} setUserProfile={setUserProfile}  />
+      <MyContext.Provider
+        value={[
+          userName,
+          setUserName,
+          userId,
+          setUserId,
+          setUserProfile,
+          setProfilePicture,
+        ]}
+      >
+        <ResponsiveAppBar
+          isLoggedIn={isLoggedIn}
+          userProfile={userProfile}
+          setUserProfile={setUserProfile}
+        />
 
         <Routes>
           <Route path={"/"} element={isLoggedIn ? <AllPosts /> : <Home />} />
@@ -123,7 +137,7 @@ React.useEffect(() => {
             }
           />
 
-          <Route
+          {/* <Route
             path="/profile"
             element={
               isLoggedIn ? (
@@ -135,21 +149,33 @@ React.useEffect(() => {
                 <Home />
               )
             }
-          />
+          /> */}
 
           <Route path="/signup" element={<SignUp />} />
           <Route
             path="/profile/:user"
             element={
-              <ProfilePage userName={userName} setUserName={setUserName} />
+              isLoggedIn ? (
+                <ProfilePage userName={userName} setUserName={setUserName} />
+              ) : (
+                <SignIn />
+              )
             }
           />
           <Route
             path="/editprofile"
             element={
-              <EditProfile userName={userName} setUserName={setUserName} />
+              isLoggedIn ? (
+                <EditProfile userName={userName} setUserName={setUserName} />
+              ) : (
+                <SignIn />
+              )
             }
           />
+       
+
+        <Route path="*" element={<NotFound/>}/>
+       
         </Routes>
       </MyContext.Provider>
     </div>

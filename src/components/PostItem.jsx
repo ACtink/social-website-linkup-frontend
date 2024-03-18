@@ -17,10 +17,11 @@ function PostItem({ post, index }) {
         <Box
           style={{
             position: "relative",
-            width: "100%",
-            paddingTop: "100%", // Maintain aspect ratio (1:1) for the container
-            overflow: "hidden", // Ensure images do not overflow the container
+            width: "200px", // Fixed width of container
+            height: "200px", // Fixed height of container
+            border: "1px solid #ccc", // Nice border
             borderRadius: "8px",
+            overflow: "hidden", // Ensure images do not overflow the container
             cursor: "pointer",
           }}
           onClick={modalHandler}
@@ -29,12 +30,9 @@ function PostItem({ post, index }) {
             src={post.photoUrl}
             alt={`Post ${post._id}`}
             style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
               width: "100%", // Make the image take full width of its container
               height: "100%", // Make the image take full height of its container
-              objectFit: "cover", // Cover the entire container without distortion
+              objectFit: "cover", // Ensure the image covers the entire container
               borderRadius: "8px",
             }}
           />

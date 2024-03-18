@@ -33,18 +33,17 @@ function SinglePostPage({ post, isOpen, onClose }) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            overflow: "hidden",
+            overflow: "hidden", // Ensure images do not overflow the container
           }}
         >
           <img
             src={post.photoUrl}
             alt="Post"
             style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
+              maxWidth: "100%", // Make the image take full width of its container
+              maxHeight: "100%", // Make the image take full height of its container
+              objectFit: "contain", // Ensure the image is shown completely without being cropped
               verticalAlign: "middle",
-              display:"block"
             }}
           />
         </Box>

@@ -48,7 +48,7 @@ export default function SignIn({ isLoggedIn, setIsLoggedIn }) {
 
         setUserId(response.data.userId);
 
-        navigate("/profile");
+        navigate("/allposts");
       }
     } catch (err) {
 
