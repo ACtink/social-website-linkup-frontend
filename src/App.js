@@ -15,6 +15,7 @@ import ProfilePage from "./components/ProfilePage";
 import EditProfile from "./components/EditProfile";
 import { useAxiosForToken } from "./hooks/useAxiosForToken";
 import NotFound from "./components/NotFoundPage";
+import ShowPost from "./components/ShowPost";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -172,10 +173,9 @@ React.useEffect(() => {
               )
             }
           />
-       
+          <Route path="/post/:id" element={<ShowPost />} />
 
-        <Route path="*" element={<NotFound/>}/>
-       
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </MyContext.Provider>
     </div>
