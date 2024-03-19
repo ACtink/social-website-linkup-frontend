@@ -29,6 +29,7 @@ function ModalThatShowsList({ listData, listType, isOpen, onClose }) {
           display: "flex",
           flexDirection: "column",
           margin: "10px",
+          borderRadius: "10px", // Small border radius
         }}
       >
         <Typography variant="h5" sx={{ marginBottom: 2 }}>

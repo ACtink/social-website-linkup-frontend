@@ -154,7 +154,7 @@ function ProfilePage({ userName, setUserName }) {
                 </Box>
               </Grid>
               <Grid item xs={6} sm={6} xl={6}>
-                <Typography variant="h5">{userProfile.username}</Typography>
+                <Typography variant="h6">{userProfile.username}</Typography>
 
                 <Typography
                   variant="subtitle1"

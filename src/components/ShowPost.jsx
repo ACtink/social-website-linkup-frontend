@@ -10,7 +10,6 @@ function ShowPost() {
   const [post, setPost] = useState({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [expandComments, setExpandComments] = useState(false); // State for comments expansion
   const privateAxios = useAxiosForToken();
 
   useEffect(() => {
@@ -41,10 +40,6 @@ function ShowPost() {
 
   const handleGoBack = () => {
     navigate(-1);
-  };
-
-  const handleCommentsClick = () => {
-    setExpandComments(!expandComments);
   };
 
   return (
@@ -79,11 +74,10 @@ function ShowPost() {
           <Box
             sx={{
               flex: { xs: "1 1 100%", sm: "1 1 100%" },
-              padding: { xs: "5px", sm: "20px" }, // Adjusted padding for small screens
-              boxShadow: { xs: "none", sm: "0px 4px 15px rgba(0, 0, 0, 0.2)" }, // Adjusted boxShadow for small screens
-              height: { xs: "100%", sm: expandComments ? "100%" : "auto" }, // Adjusted height for small screens
-              overflowY: { xs: "auto", sm: "scroll" },
-               // Adjusted overflowY for small screens
+              padding: { xs: "5px", sm: "20px" },
+              boxShadow: { xs: "none", sm: "0px 4px 15px rgba(0, 0, 0, 0.2)" },
+              maxHeight: { xs: "40vh", sm: "50vh", md:"85vh" },
+              overflowY: "scroll",
             }}
           >
             <Typography variant="h6" gutterBottom>
@@ -99,10 +93,7 @@ function ShowPost() {
               style={{
                 listStyleType: "none",
                 padding: 0,
-                height: "100%",
-                overflowY: "scroll",
               }}
-              onClick={handleCommentsClick}
             >
               {post?.comments?.map((comment, index) => (
                 <li

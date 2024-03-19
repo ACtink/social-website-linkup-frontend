@@ -53,6 +53,24 @@ function SinglePostPage({ post, isOpen, onClose }) {
             padding: "0 20px",
           }}
         >
+          {/* Caption Title */}
+          <Typography variant="subtitle1" sx={{ color: "#757575" }}>
+            Caption
+          </Typography>
+          {/* Post Title */}
+          <Typography
+            variant="h6"
+            sx={{
+              marginBottom: 2,
+              color: "#333",
+              fontWeight: "bold",
+              fontSize: "1.2rem",
+            }}
+          >
+            {post.title}
+          </Typography>
+
+          {/* Comments and Likes Section */}
           <Typography variant="h6" sx={{ marginBottom: 2 }}>
             Comments and Likes
           </Typography>
@@ -67,7 +85,9 @@ function SinglePostPage({ post, isOpen, onClose }) {
             >
               Comments:
             </Typography>
-            <ul style={{ paddingLeft: 0 }}>
+            <ul
+              style={{ paddingLeft: 0, overflow: "auto", maxHeight: "270px" }}
+            >
               {post?.comments?.map((comment, index) => (
                 <li
                   key={index}
@@ -94,6 +114,7 @@ function SinglePostPage({ post, isOpen, onClose }) {
               ))}
             </ul>
           </Box>
+          {/* End of Comments and Likes Section */}
         </Box>
         <Button
           onClick={onClose}

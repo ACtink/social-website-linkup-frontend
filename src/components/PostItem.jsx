@@ -13,16 +13,18 @@ function PostItem({ post, index }) {
     <>
       <SinglePostPage post={post} isOpen={isModalOpen} onClose={modalHandler} />
 
-      <Grid item xs={6} sm={4} md={3} lg={3} xl={3} key={index}>
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={index}>
         <Box
           style={{
             position: "relative",
-            width: "200px", // Fixed width of container
-            height: "200px", // Fixed height of container
-            border: "1px solid #ccc", // Nice border
+            width: "100%", // Full width
+            height: "200px", // Fixed height for the container
+            border: "1px solid #ccc",
             borderRadius: "8px",
-            overflow: "hidden", // Ensure images do not overflow the container
+            overflow: "hidden",
             cursor: "pointer",
+            padding: "5px", 
+            margin:"0 auto"// Padding all around
           }}
           onClick={modalHandler}
         >
