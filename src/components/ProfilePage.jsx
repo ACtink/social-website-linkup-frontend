@@ -48,8 +48,12 @@ function ProfilePage({ userName, setUserName }) {
 
   const fetchUserProfileAndPosts = async () => {
     try {
+            setLoading(true);
+
       privateAxios.defaults.withCredentials = true;
       const response = await privateAxios.get(`/user/${user}`);
+       await new Promise((res) => setTimeout(res, 1000));
+       setLoading(false);
       setUserProfile(response.data);
       setError("");
       if (
@@ -196,14 +200,16 @@ function ProfilePage({ userName, setUserName }) {
               padding: "10px",
             }}
           >
-            <Box
-              sx={{
-                height: "0.062rem",
-                width: "100%",
-                bgcolor: "#828790",
-                marginBottom: "10px",
-              }}
-            ></Box>
+            {userProfile && (
+              <Box
+                sx={{
+                  height: "0.062rem",
+                  width: "100%",
+                  bgcolor: "#828790",
+                  marginBottom: "2rem",
+                }}
+              ></Box>
+            )}
 
             {loading && <Loading marginValue={170} />}
 

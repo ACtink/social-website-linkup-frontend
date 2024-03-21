@@ -28,11 +28,14 @@ function AllPosts() {
       console.log("calling getpost with page value" , page)
       privateAxios.defaults.withCredentials = true;
       const response = await privateAxios.get(`/posts?page=${page}&limit=10`);
+            await new Promise((res) => setTimeout(res, 1000));
+
       if (response?.data.length === 0) {
         setReachedEnd(true);
       } else {
         console.log(response.data)
               setError("");
+
         setPosts((prevPosts) => [...prevPosts, ...response.data]);
         setPage((prevPage) => prevPage + 1); // Use functional update to ensure correct value of page
       }
