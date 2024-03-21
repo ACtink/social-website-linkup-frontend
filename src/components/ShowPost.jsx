@@ -12,6 +12,8 @@ function ShowPost() {
   const [loading, setLoading] = useState(false);
   const privateAxios = useAxiosForToken();
 
+  const loggedInUser = localStorage.getItem("userName");
+
   useEffect(() => {
     const fetchPost = async () => {
       setLoading(true);
@@ -42,6 +44,39 @@ function ShowPost() {
     navigate(-1);
   };
 
+  const handleDelete = async () => {
+
+        const isConfirmed = window.confirm(
+          "Are you sure you want to delete this post?"
+        );
+
+
+        if(isConfirmed){
+                console.log("Deleting post...");
+
+            privateAxios.defaults.withCredentials = true;
+
+          const response = await privateAxios.delete(`/posts/${id}`);
+
+            if (response.data) {
+              navigate(-1);
+            } else {
+              setError("Error while deleting post , sorry :(");
+            }
+
+        }
+        else{
+
+                console.log("Post deletion canceled.");
+
+
+        }
+  
+
+
+   
+  };
+
   return (
     <>
       {loading && <Loading marginValue={300} />}
@@ -50,14 +85,23 @@ function ShowPost() {
           sx={{
             display: "flex",
             flexDirection: { xs: "column", sm: "row" },
-            alignItems: "flex-start",
+            // alignItems: "flex-start",
+            justifyContent: "space-between",
             paddingTop: { xs: "18%", sm: "10%", md: "5%", xl: "5%" },
+            maxHeight: "100vh",
           }}
         >
           <Box
             sx={{
-              flex: { xs: "1 1 100%", md: "0 0 70%" },
-              paddingRight: { xs: 0, sm: "20px" },
+              display: "flex",
+              justifyContent: "center",
+              bgcolor: "black",
+              alignItems: "center",
+
+              minWidth: { xs: " 100vw", md: " 70vw" },
+              // maxHeight: { xs: " 40vh", md: " 70vw" },
+
+              // paddingRight: { xs: 0, sm: "20px" },
               overflow: "hidden",
             }}
           >
@@ -65,8 +109,10 @@ function ShowPost() {
               src={post.photoUrl}
               alt={`Post ${post._id}`}
               style={{
-                width: "100%",
-                height: "100%",
+                width: "auto",
+                height: "auto",
+                maxheight: "100%",
+                maxwidth: "100%",
                 objectFit: "contain",
               }}
             />
@@ -83,8 +129,27 @@ function ShowPost() {
             }}
           >
             <Typography
+              variant="h6"
+              sx={{
+                fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                fontWeight: "bold",
+                color: "#1976D2",
+                marginTop: 1,
+                textDecoration: "underline",
+                textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+              }}
+            >
+              By {post.author?.username}
+            </Typography>
+            <Typography
               variant="subtitle1"
-              sx={{ color: "#616161", fontFamily: "Arial, sans-serif" }}
+              sx={{
+                color: "#616161", // Faded color
+                fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", // Thin font
+                fontWeight: 300, // Thin font weight
+                textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)", // Dark shadow
+                marginBottom: 1, // Add some space below the caption
+              }}
             >
               Caption
             </Typography>
@@ -95,8 +160,10 @@ function ShowPost() {
                 marginBottom: 2,
                 color: "#212121",
                 fontWeight: 600,
-                fontSize: "1.5rem",
-                fontFamily: "Arial, sans-serif",
+                fontSize: "1.1rem",
+                fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", // You can keep the same font as the caption or change it
+                textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)", // Add a thicker shadow to the post title
+                textDecoration: "underline", // Add underline to the post title
               }}
             >
               {post.title}
@@ -173,6 +240,22 @@ function ShowPost() {
                 Go Back
               </Button>
             </Box>
+            {post.author?.username === loggedInUser && (
+              <Box>
+                <Button
+                  variant="contained"
+                  color="error"
+                  sx={{
+                    marginTop: "20px",
+                    alignSelf: "flex-end", // Align the button to the end of the flex container
+                    marginLeft: "auto", // Push the button to the end of the container
+                  }}
+                  onClick={handleDelete}
+                >
+                  Delete Post
+                </Button>
+              </Box>
+            )}
           </Box>
         </Box>
       )}

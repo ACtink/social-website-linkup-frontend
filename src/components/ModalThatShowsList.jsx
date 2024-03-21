@@ -10,6 +10,7 @@ import {
   ListItemAvatar,
   Avatar,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function ModalThatShowsList({ listData, listType, isOpen, onClose }) {
   return (
@@ -38,25 +39,28 @@ function ModalThatShowsList({ listData, listType, isOpen, onClose }) {
         {listData && listData.length > 0 ? (
           <List style={{ flex: "1", overflowY: "auto" }}>
             {listData.map((item, index) => (
-              <ListItem
-                key={index}
-                sx={{
-                  borderBottom: "1px solid #ccc",
-                  backgroundColor: "#ffffff",
-                  borderRadius: "8px",
-                  marginBottom: "8px",
-                }}
-              >
-                <ListItemAvatar>
-                  <Avatar
-                    src={item.author ? item.author.profilePic : item.profilePic}
+              <Link key={index} to={`/profile/${item.author?.username}`}>
+                <ListItem
+                  sx={{
+                    borderBottom: "1px solid #ccc",
+                    backgroundColor: "#ffffff",
+                    borderRadius: "8px",
+                    marginBottom: "8px",
+                  }}
+                >
+                  <ListItemAvatar>
+                    <Avatar
+                      src={
+                        item.author ? item.author.profilePic : item.profilePic
+                      }
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={item.author ? item.author.username : item.username}
+                    sx={{ flexGrow: 1, fontSize: "smaller" }}
                   />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={item.author ? item.author.username : item.username}
-                  sx={{ flexGrow: 1, fontSize: "smaller" }}
-                />
-              </ListItem>
+                </ListItem>
+              </Link>
             ))}
           </List>
         ) : (

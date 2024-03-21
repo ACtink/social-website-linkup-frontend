@@ -10,6 +10,7 @@ import {
   ListItemAvatar,
   Avatar,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function ModalThatShowsComments({ listData, listType, isOpen, onClose }) {
   return (
@@ -47,30 +48,36 @@ function ModalThatShowsComments({ listData, listType, isOpen, onClose }) {
                   marginBottom: "8px", // Spacing between list items
                 }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    width: "100%",
-                    paddingRight: "10px",
-                  }}
-                >
-                  <ListItemAvatar>
-                    <Avatar
-                      src={
-                        item.author ? item.author.profilePic : item.profilePic
+                <Link to={`/profile/${item.author.username}`}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      width: "calc(100% - 32px)", // Adjusted width to accommodate padding and margin
+                      paddingRight: "16px", // Padding on the right side
+                      marginRight: "16px", // Margin on the right side
+                    }}
+                  >
+                    <ListItemAvatar>
+                      <Avatar
+                        src={
+                          item.author ? item.author.profilePic : item.profilePic
+                        }
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={
+                        item.author ? item.author.username : item.username
                       }
+                      sx={{ fontSize: "smaller" }}
                     />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={item.author ? item.author.username : item.username}
-                    sx={{ flexGrow: 1, fontSize: "smaller" }}
-                  />
-                </Box>
+                  </Box>
+                </Link>
                 <Box
                   sx={{
-                    width: "100%",
-                    overflowWrap: "break-word",
+                    width: "calc(100% - 32px)", // Adjusted width to accommodate padding and margin
+                    paddingRight: "16px", // Padding on the right side
+                    marginRight: "16px", // Margin on the right side
                   }}
                 >
                   <ListItemText

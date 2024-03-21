@@ -159,6 +159,12 @@ function ProfilePage({ userName, setUserName }) {
               </Grid>
               <Grid item xs={6} sm={6} xl={6}>
                 <Typography variant="h6">{userProfile.username}</Typography>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ marginBottom: "5px"}}
+                >
+                  Posts: {userPosts?.length}
+                </Typography>
 
                 <Typography
                   variant="subtitle1"
