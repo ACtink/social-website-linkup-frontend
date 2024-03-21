@@ -76,22 +76,57 @@ function ShowPost() {
               flex: { xs: "1 1 100%", sm: "1 1 100%" },
               padding: { xs: "5px", sm: "20px" },
               boxShadow: { xs: "none", sm: "0px 4px 15px rgba(0, 0, 0, 0.2)" },
-              maxHeight: { xs: "40vh", sm: "50vh", md:"85vh" },
+              maxHeight: { xs: "40vh", sm: "50vh", md: "85vh" },
+              minWidth: { xs: "100vw", sm: "100vw", md: "30vw" },
+              maxWidth: { xs: "100vw", sm: "100vw", md: "30vw" },
               overflowY: "scroll",
             }}
           >
-            <Typography variant="h6" gutterBottom>
+            <Typography
+              variant="subtitle1"
+              sx={{ color: "#616161", fontFamily: "Arial, sans-serif" }}
+            >
+              Caption
+            </Typography>
+            {/* Post Title */}
+            <Typography
+              variant="h6"
+              sx={{
+                marginBottom: 2,
+                color: "#212121",
+                fontWeight: 600,
+                fontSize: "1.5rem",
+                fontFamily: "Arial, sans-serif",
+              }}
+            >
+              {post.title}
+            </Typography>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ color: "#212121", fontFamily: "Arial, sans-serif" }}
+            >
               Comments and Likes
             </Typography>
-            <Typography variant="subtitle1" gutterBottom>
+            <Typography
+              variant="subtitle1"
+              gutterBottom
+              sx={{ color: "#616161", fontFamily: "Arial, sans-serif" }}
+            >
               Total Likes: {post.likes}
             </Typography>
-            <Typography variant="subtitle1" gutterBottom fontWeight="bold">
+            <Typography
+              variant="subtitle1"
+              gutterBottom
+              fontWeight="bold"
+              sx={{ color: "#212121", fontFamily: "Arial, sans-serif" }}
+            >
               Comments:
             </Typography>
             <ul
               style={{
                 listStyleType: "none",
+
                 padding: 0,
               }}
             >
@@ -124,14 +159,20 @@ function ShowPost() {
                 </li>
               ))}
             </ul>
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginTop: "20px" }}
-              onClick={handleGoBack}
-            >
-              Go Back
-            </Button>
+            <Box>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                  marginTop: "20px",
+                  alignSelf: "flex-end", // Align the button to the end of the flex container
+                  marginLeft: "auto", // Push the button to the end of the container
+                }}
+                onClick={handleGoBack}
+              >
+                Go Back
+              </Button>
+            </Box>
           </Box>
         </Box>
       )}

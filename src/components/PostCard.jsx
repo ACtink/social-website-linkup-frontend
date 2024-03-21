@@ -153,247 +153,240 @@ export default function PostCard({ post }) {
         />
       )}
 
-  
-    
-        <Card
-          sx={{
-            maxWidth: { xs: "100%", sm: "90%", md: "70%" },
-            height: { xs: "30%", sm: "30%", md: "30%" },
-            maxHeight: { md: "50%" },
-            padding: "5px",
-            marginBottom: "20px",
-            minWidth: { xs: "100%", sm: "90%", md: "70%" },
-            boxShadow: "0px 4px 8px rgba(38, 38, 38, 0.2)",
-            transition: "transform 0.3s ease-in-out",
-          }}
-        >
-          <CardHeader
-            avatar={
-              <Link to={`/profile/${post.username}`}>
-                <Avatar
-                  alt="Profile picture of the user who posted this post"
-                  src={
-                    post.author.profilePic
-                      ? post.author.profilePic
-                      : "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg"
-                  }
-                />
-              </Link>
-            }
-            title={post.username}
-            subheader={formatTimeStamp(post.timestamp)}
-          />
-
-          <CardMedia
-            onClick={() => handleModalOpen("singlePost")}
-            component="img"
-            image={post.photoUrl}
-            alt="Tree in snow"
-            // sx={{
-            //   width: "100%",
-            //   maxHeight: { md: "30rem", xs: "32rem" },
-            //   objectFit: { md: "contain", sm: "cover", xs: "cover" },
-            //   padding: "1rem",
-            // }}
-
-            sx={{
-              display: "block",
-              verticalAlign: "middle",
-              maxWidth: "100%",
-              height: "auto",
-              borderStyle: "none",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              imageRendering: "smooth",
-              fontStyle: "italic",
-              shapeMargin: "1rem",
-            }}
-          />
-
-          <CardActions disableSpacing>
-            <LikeButton
-              post={post}
-              setTotalLikes={setTotalLikes}
-              setIsLikesUpdated={setIsLikesUpdated}
-              isLikesUpdated={isLikesUpdated}
+      <Card
+        sx={{
+          maxWidth: { xs: "100%", sm: "90%", md: "70%" },
+          height: { xs: "30%", sm: "30%", md: "30%" },
+          maxHeight: { md: "50%" },
+          padding: "5px",
+          marginBottom: "20px",
+          minWidth: { xs: "100%", sm: "90%", md: "70%" },
+          boxShadow: "0px 4px 8px rgba(38, 38, 38, 0.2)",
+          transition: "transform 0.3s ease-in-out",
+        }}
+      >
+        <Link to={`/post/${post._id}`} component={React.Fragment}>
+     
+            <CardHeader
+              avatar={
+                <Link to={`/profile/${post.username}`}>
+                  <Avatar
+                    alt="Profile picture of the user who posted this post"
+                    src={
+                      post.author.profilePic
+                        ? post.author.profilePic
+                        : "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg"
+                    }
+                  />
+                </Link>
+              }
+              title={post.username}
+              subheader={formatTimeStamp(post.timestamp)}
             />
-            <Typography
-              variant="body2"
-              sx={{
-                cursor: "pointer",
-                ml: 1,
-                "&:hover": {
-                  color: "#1976D2",
-                  textDecoration: "underline",
-                },
-              }}
-              onClick={() => handleModalOpen("likesList")}
-            >
-              {totalLikes} Likes
-            </Typography>
-          </CardActions>
+                    </Link>
 
-          <CardContent
-            sx={{
-              wordWrap: "break-word",
-              gap: "15px",
-            }}
-          >
-            <Typography
-              component={"div"}
-              variant="body1"
+            <CardMedia
+              component="img"
+              image={post.photoUrl}
+              alt="Tree in snow"
               sx={{
-                color: "text.secondary",
+                display: "block",
+                verticalAlign: "middle",
+                maxWidth: "100%",
+                height: "auto",
+                borderStyle: "none",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                imageRendering: "smooth",
+                fontStyle: "italic",
+                shapeMargin: "1rem",
+                cursor: "pointer",
+              }}
+              onClick={() => handleModalOpen("singlePost")}
+            />
+            <CardActions disableSpacing>
+              <LikeButton
+                post={post}
+                setTotalLikes={setTotalLikes}
+                setIsLikesUpdated={setIsLikesUpdated}
+                isLikesUpdated={isLikesUpdated}
+              />
+              <Typography
+                variant="body2"
+                sx={{
+                  cursor: "pointer",
+                  ml: 1,
+                  "&:hover": {
+                    color: "#1976D2",
+                    textDecoration: "underline",
+                  },
+                }}
+                onClick={() => handleModalOpen("likesList")}
+              >
+                {totalLikes} Likes
+              </Typography>
+            </CardActions>
+            <CardContent
+              sx={{
+                wordWrap: "break-word",
+                gap: "15px",
               }}
             >
-              <Box
+              <Typography
+                component={"div"}
+                variant="body1"
                 sx={{
-                  fontFamily: "Arial, sans-serif",
-                  fontSize: "1rem",
-                  fontStyle: "italic",
-                  textTransform: "capitalize",
-                  color: "#031729",
-                  textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
-                  borderBottom: "1px solid #ddd",
-                  letterSpacing: "2px",
-                  fontWeight: 800,
+                  color: "text.secondary",
                 }}
               >
-                <Link to={`/profile/${post.username}`}>
-                  {post.username.charAt(0).toUpperCase() +
-                    post.username.slice(1)}
-                  -
-                </Link>
-              </Box>
-            </Typography>
-
-            <Typography
-              component={"div"}
-              variant="body2"
-              color="text.secondary"
-            >
-              {isTruncated && !showMore && (
-                <Box sx={{ color: "#1F032A" }}>
-                  {post.title.slice(0, 90)}...
-                </Box>
-              )}
-              {isTruncated && showMore && (
                 <Box
                   sx={{
-                    maxHeight: "20%",
-                    flex: "2",
-                    color: "#1F032A",
-                    wordWrap: "break-word",
+                    fontFamily: "Arial, sans-serif",
+                    fontSize: "1rem",
+                    fontStyle: "italic",
+                    textTransform: "capitalize",
+                    color: "#031729",
+                    textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
+                    borderBottom: "1px solid #ddd",
+                    letterSpacing: "2px",
+                    fontWeight: 800,
                   }}
                 >
-                  {post.title}
+                  <Link to={`/profile/${post.username}`}>
+                    {post.username.charAt(0).toUpperCase() +
+                      post.username.slice(1)}
+                    -
+                  </Link>
                 </Box>
-              )}
-              {!isTruncated && (
-                <Box sx={{ color: "#1F032A" }}>{post.title}</Box>
-              )}
-              {isTruncated && !showMore && (
-                <Button
-                  onClick={handleShowMore}
-                  sx={{
+              </Typography>
+
+              <Typography
+                component={"div"}
+                variant="body2"
+                color="text.secondary"
+              >
+                {isTruncated && !showMore && (
+                  <Box sx={{ color: "#1F032A" }}>
+                    {post.title.slice(0, 90)}...
+                  </Box>
+                )}
+                {isTruncated && showMore && (
+                  <Box
+                    sx={{
+                      maxHeight: "20%",
+                      flex: "2",
+                      color: "#1F032A",
+                      wordWrap: "break-word",
+                    }}
+                  >
+                    {post.title}
+                  </Box>
+                )}
+                {!isTruncated && (
+                  <Box sx={{ color: "#1F032A" }}>{post.title}</Box>
+                )}
+                {isTruncated && !showMore && (
+                  <Button
+                    onClick={handleShowMore}
+                    sx={{
+                      color: "#1976D2",
+                      fontSize: "0.8rem",
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    Show more
+                  </Button>
+                )}
+
+                {showMore && (
+                  <Button
+                    onClick={handleShowMore}
+                    sx={{
+                      color: "#1976D2",
+                      fontSize: "0.8rem",
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    Show less
+                  </Button>
+                )}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  cursor: "pointer",
+                  pt: 1,
+                  pb: 1,
+                  "&:hover": {
                     color: "#1976D2",
-                    fontSize: "0.8rem",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  Show more
-                </Button>
-              )}
+                    textDecoration: "underline",
+                  },
+                }}
+                onClick={() => handleModalOpen("comments")}
+              >
+                {postComments.length > 0 &&
+                  `View all ${postComments.length} comments`}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  pt: 1,
+                  pb: 1,
+                  color: "text.secondary",
+                }}
+              >
+                {postComments.length > 0 &&
+                  `Latest comment - ${
+                    postComments[postComments.length - 1]?.content
+                  }`}
+              </Typography>
+            </CardContent>
 
-              {showMore && (
-                <Button
-                  onClick={handleShowMore}
-                  sx={{
-                    color: "#1976D2",
-                    fontSize: "0.8rem",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  Show less
-                </Button>
-              )}
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{
-                cursor: "pointer",
-                pt: 1,
-                pb: 1,
-                "&:hover": {
-                  color: "#1976D2",
-                  textDecoration: "underline",
-                },
-              }}
-              onClick={() => handleModalOpen("comments")}
-            >
-              {postComments.length > 0 &&
-                `View all ${postComments.length} comments`}
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{
-                pt: 1,
-                pb: 1,
-                color: "text.secondary",
-              }}
-            >
-              {postComments.length > 0 &&
-                `Latest comment - ${
-                  postComments[postComments.length - 1]?.content
-                }`}
-            </Typography>
-          </CardContent>
-
-          <CardContent>
-            <Box component="form" ref={formRef} onSubmit={handleSubmit}>
-              <TextField
-                fullWidth
-                name="comment"
-                id="standard-search"
-                label="Type a comment"
-                type="search"
-                variant="standard"
-                sx={{ mt: 1, mb: 1 }}
-              />
-              {loading ? (
-                <Button
-                  type="submit"
-                  variant="contained"
-                  disabled
-                  sx={{
-                    width: "100%",
-                    fontSize: "0.8rem",
-                    fontWeight: "bold",
-                    bgcolor: "#1976D2",
-                    color: "#FFF",
-                  }}
-                >
-                  Loading...
-                </Button>
-              ) : (
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    width: "100%",
-                    fontSize: "0.8rem",
-                    fontWeight: "bold",
-                    bgcolor: "#1976D2",
-                    color: "#FFF",
-                  }}
-                >
-                  Comment
-                </Button>
-              )}
-            </Box>
-          </CardContent>
-        </Card>
-
+            <CardContent>
+              <Box component="form" ref={formRef} onSubmit={handleSubmit}>
+                <TextField
+                  fullWidth
+                  name="comment"
+                  id="standard-search"
+                  label="Type a comment"
+                  type="search"
+                  variant="standard"
+                  sx={{ mt: 1, mb: 1 }}
+                />
+                {loading ? (
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    disabled
+                    sx={{
+                      width: "100%",
+                      fontSize: "0.8rem",
+                      fontWeight: "bold",
+                      bgcolor: "#1976D2",
+                      color: "#FFF",
+                    }}
+                  >
+                    Loading...
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      width: "100%",
+                      fontSize: "0.8rem",
+                      fontWeight: "bold",
+                      bgcolor: "#1976D2",
+                      color: "#FFF",
+                    }}
+                  >
+                    Comment
+                  </Button>
+                )}
+              </Box>
+            </CardContent>
+   
+      </Card>
     </>
   );
 }

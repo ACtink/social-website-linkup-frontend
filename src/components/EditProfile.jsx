@@ -60,7 +60,7 @@ if(response.data){
   };
 
   return (
-    <Box sx={{ maxWidth: 400, margin: "auto", marginTop: "100px" }}>
+    <Box sx={{ maxWidth: 400, margin: "auto", marginTop: "120px" , padding:"10px"  }}>
       <Button
         variant="contained"
         onClick={handleGoBack}

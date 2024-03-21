@@ -29,6 +29,7 @@ function ModalThatShowsComments({ listData, listType, isOpen, onClose }) {
           borderRadius: "10px", // Small border radius
           display: "flex",
           flexDirection: "column",
+          margin: "10px",
         }}
       >
         <Typography variant="h5" sx={{ marginBottom: 2 }}>
