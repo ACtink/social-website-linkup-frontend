@@ -8,7 +8,7 @@ console.log("this is process.env" , process.env.NODE_ENV)
 
 const baseURL =
   process.env.NODE_ENV === "production"
-    ? "https://backend.weblinkup.online/api"
+    ? "https://linkup-backend.weblinkup.online/api"
     : "http://localhost:5000/api";
 
 axios.defaults.baseURL = baseURL;
