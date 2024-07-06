@@ -10,8 +10,9 @@ import {
 
 import PostCard from "./PostCard";
 import NoPostsMessage from "./NoPostsMessage";
+import Loading from "./Loading";
 
-function RenderPosts({ posts, setPosts, error }) {
+function RenderPosts({ posts, setPosts, error , loading , currentPageRef}) {
   const skeletonWidth = "60vw";
   const skeletonHeight = 300;
 
@@ -57,11 +58,7 @@ function RenderPosts({ posts, setPosts, error }) {
                   padding: "10px",
                 }}
               >
-                <PostCard
-                  key={indx + "post.title"}
-                  post={post}
-                  
-                />
+                <PostCard key={indx + "post.title"} post={post} />
               </Box>
             ))
           : Array.from({ length: 5 }).map((_, index) => (
@@ -123,6 +120,9 @@ function RenderPosts({ posts, setPosts, error }) {
               </Box>
             ))}
       </Box>
+
+      {loading && currentPageRef!==1 && <Loading marginValue={10} />}
+
       {/* {posts?.length===0 &&  <NoPostsMessage/>} */}
     </>
   );

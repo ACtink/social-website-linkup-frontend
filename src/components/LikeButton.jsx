@@ -12,37 +12,67 @@ import { useGetData } from "../utils/useGetData";
 const LikeButton = ({ post, setTotalLikes , setIsLikesUpdated , isLikesUpdated }) => {
   const [userName, setUserName, userId, setUserId] =
     React.useContext(MyContext);
-  const getData = useGetData();
   const postId = post._id;
   const isAlreadyLiked = post.likesArray.some((like) => like.author._id === userId);
   const deleteData = useDeleteData();
   const postData = usePostData();
-  const [liked, setLiked] = useState(isAlreadyLiked);
+//   const [liked, setLiked] = useState(isAlreadyLiked);
+// const handleLike = async () => {
+//   try {
+//     if (liked) {
+//       // Unlike post
+//       setTotalLikes((prev) => prev - 1);
+//       const response = await deleteData(`/posts/${postId}/like`);
+//       console.log(" deleted ", response.data.likesCount);
+//       setIsLikesUpdated(true);
+//       if (response.data) {
+        
+//       }
+//     } else {
+//       // Like post
+//       setTotalLikes((prev) => prev + 1);
+//       const response = await postData(`/posts/${postId}/like`);
+//       console.log(" created ", response.data.likesCount);
+//       setIsLikesUpdated(true);
+//       if (response.data) {
+
+//       }
+//     }
+//     // Toggle like state
+//     setLiked((prevLiked) => !prevLiked);
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// };
+
+const [liked, setLiked] = useState(isAlreadyLiked);
+const [loading, setLoading] = useState(false); // Add loading state
+
 const handleLike = async () => {
+  if (loading) return; // Prevent multiple clicks
+
+  setLoading(true); // Start loading
+
   try {
     if (liked) {
       // Unlike post
       setTotalLikes((prev) => prev - 1);
       const response = await deleteData(`/posts/${postId}/like`);
-      console.log(" deleted ", response.data.likesCount);
+      console.log("deleted", response.data.likesCount);
       setIsLikesUpdated(true);
-      if (response.data) {
-        
-      }
     } else {
       // Like post
       setTotalLikes((prev) => prev + 1);
       const response = await postData(`/posts/${postId}/like`);
-      console.log(" created ", response.data.likesCount);
+      console.log("created", response.data.likesCount);
       setIsLikesUpdated(true);
-      if (response.data) {
-
-      }
     }
     // Toggle like state
     setLiked((prevLiked) => !prevLiked);
   } catch (error) {
     console.error("Error:", error);
+  } finally {
+    setLoading(false); // End loading
   }
 };
 
@@ -52,6 +82,7 @@ const handleLike = async () => {
     <IconButton
       onClick={handleLike}
       aria-label="like"
+      disabled={loading}
       sx={{
         color: liked ? "#ff1744" : "rgba(0, 0, 0, 0.54)",
         "&:hover": {

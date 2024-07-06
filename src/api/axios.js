@@ -29,7 +29,7 @@ axios.defaults.baseURL = baseURL;
 
 export const privateAxios = axios.create({
 
-    // baseURL: "https://linkup-backend-service.onrender.com/api",
+   
     baseURL: baseURL,
 
 

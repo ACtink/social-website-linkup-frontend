@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import LeftSide from "./LeftSide";
 import RightSide from "./RightSide";
@@ -8,36 +8,37 @@ import Loading from "./Loading";
 import { useAxiosForToken } from "../hooks/useAxiosForToken";
 
 function AllPosts() {
+  
+
   const [error, setError] = useState("");
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [reachedEnd, setReachedEnd] = useState(false);
+  const currentPageRef = useRef(1);
 
-    const privateAxios = useAxiosForToken();
-
+  const privateAxios = useAxiosForToken();
 
   const fetchPosts = async () => {
-
-    console.log("calling first time")
+    if (loading || reachedEnd) return; // Prevent concurrent calls
     setLoading(true);
 
-    console.log("value of page " ,page)
+ 
     try {
-
-      console.log("calling getpost with page value" , page)
+      console.log("calling getpost with page value", currentPageRef.current);
       privateAxios.defaults.withCredentials = true;
-      const response = await privateAxios.get(`/posts?page=${page}&limit=10`);
-            await new Promise((res) => setTimeout(res, 1000));
+      const response = await privateAxios.get(
+        `/posts?page=${currentPageRef.current}&limit=10`
+      );
+      await new Promise((res) => setTimeout(res, 1000)); // Simulating delay
 
       if (response?.data.length === 0) {
         setReachedEnd(true);
       } else {
-        console.log(response.data)
-              setError("");
-
+        setError("");
         setPosts((prevPosts) => [...prevPosts, ...response.data]);
-        setPage((prevPage) => prevPage + 1); // Use functional update to ensure correct value of page
+        setPage((prevPage) => prevPage + 1);
+        currentPageRef.current += 1; // Increment the page ref after successful fetch
       }
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -46,16 +47,9 @@ function AllPosts() {
     setLoading(false);
   };
 
-
   useEffect(() => {
-
-      console.log("calling fetchPosts in first useEffect");
-
-
-      fetchPosts();
-
-  
-    
+    console.log("calling fetchPosts in first useEffect");
+    fetchPosts();
   }, []);
 
   useEffect(() => {
@@ -66,8 +60,7 @@ function AllPosts() {
         !loading &&
         !reachedEnd
       ) {
-            console.log("calling fetchPosts in second useEffect");
-
+        console.log("calling fetchPosts in second useEffect");
         fetchPosts();
       }
     };
@@ -77,7 +70,8 @@ function AllPosts() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [page, loading, reachedEnd]); // Include page, loading, and reachedEnd in the dependency array
+  }, [loading, reachedEnd]);
+
 
   return (
     <Box
@@ -89,8 +83,8 @@ function AllPosts() {
       }}
     >
       <LeftSide />
-      {loading && <Loading marginValue={700} />}
-      <MiddleSection posts={posts} setPosts={setPosts} error={error} />
+      {loading  && currentPageRef===1 && <Loading marginValue={900} />}
+      <MiddleSection loading={loading} posts={posts} setPosts={setPosts} error={error} currentPageRef={currentPageRef} />
       {reachedEnd && (
         <Box sx={{ marginBottom: "100px" }} textAlign="center">
           You've reached the end of the posts.

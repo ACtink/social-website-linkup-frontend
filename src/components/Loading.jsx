@@ -7,7 +7,7 @@ const Loading = ({marginValue}) => {
       sx={{
         display: "flex",
         justifyContent: "center",
-        height: "100vh", // Adjust height as needed
+        height: "10vh", // Adjust height as needed
       }}
     >
       <CircularProgress sx={{ marginTop: `${marginValue}px` }} color="primary" />
