@@ -28,32 +28,33 @@ function ProfilePage({ userName, setUserName }) {
     setIsModalOpen(!isModalOpen);
   };
 
- const handleFollowToggle = async () => {
-   try {
-     const response = await postData(
-       `/user/${userProfile.username}/${
-         youAreAFollower ? "unfollow" : "follow"
-       }`
-     );
-     if (response?.data) {
-       console.log(youAreAFollower ? "User unfollowed" : "User followed");
-       setYouAreAFollower(!youAreAFollower);
-       fetchUserProfileAndPosts(); // Fetch user profile and posts after updating follow status
-     }
-   } catch (err) {
-     console.log(err);
-   }
- };
-
-
-  const fetchUserProfileAndPosts = async () => {
+  const handleFollowToggle = async () => {
     try {
-            setLoading(true);
+      const response = await postData(
+        `/user/${userProfile.username}/${
+          youAreAFollower ? "unfollow" : "follow"
+        }`
+      );
+      if (response?.data) {
+        console.log(youAreAFollower ? "User unfollowed" : "User followed");
+        setYouAreAFollower(!youAreAFollower);
+        fetchUserProfile(); // Fetch user profile and posts after updating follow status
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchUserProfile = async () => {
+    try {
+      setLoading(true);
+      setUserProfile(null); // Reset user profile to null while fetching new data
+      setUserPosts([]); // Reset user posts to an empty array while fetching new data
 
       privateAxios.defaults.withCredentials = true;
       const response = await privateAxios.get(`/user/${user}`);
-       await new Promise((res) => setTimeout(res, 1000));
-       setLoading(false);
+      await new Promise((res) => setTimeout(res, 600));
+      setLoading(false);
       setUserProfile(response.data);
       setError("");
       if (
@@ -63,7 +64,7 @@ function ProfilePage({ userName, setUserName }) {
       ) {
         setYouAreAFollower(true);
       }
-      return true;
+
     } catch (error) {
       setError("Failed to fetch user profile.");
       return false;
@@ -75,7 +76,7 @@ function ProfilePage({ userName, setUserName }) {
       setLoading(true);
       privateAxios.defaults.withCredentials = true;
       const response = await privateAxios.get(`/posts/${user}`);
-      await new Promise((res) => setTimeout(res, 1000));
+      await new Promise((res) => setTimeout(res, 600));
       setLoading(false);
       setUserPosts(response.data);
       if (response.data.length === 0) {
@@ -88,14 +89,32 @@ function ProfilePage({ userName, setUserName }) {
   };
 
   useEffect(() => {
-    async function fetchData() {
-      const result =  fetchUserProfileAndPosts();
-      if (result) {
-        await fetchUserPosts();
-      }
+    async function fetchProfileData() {
+       fetchUserProfile();
+      // if (result) {
+      //   await fetchUserPosts();
+      // }
     }
-    fetchData();
+    fetchProfileData();
+  }, [user, youAreAFollower]);
+
+  useEffect(() => {
+    async function fetchPostsData() {
+       fetchUserPosts();
+      // if (result) {
+      //   await fetchUserPosts();
+      // }
+    }
+    fetchPostsData();
   }, [user]);
+
+
+
+
+
+
+
+
 
   return (
     <Box>
@@ -123,7 +142,8 @@ function ProfilePage({ userName, setUserName }) {
               {error}
             </Typography>
           )}
-          {userProfile && (
+          {loading && <Loading marginValue={170} />}
+          {!loading && userProfile && (
             <Grid
               container
               alignItems="center"
@@ -159,10 +179,7 @@ function ProfilePage({ userName, setUserName }) {
               </Grid>
               <Grid item xs={6} sm={6} xl={6}>
                 <Typography variant="h6">{userProfile.username}</Typography>
-                <Typography
-                  variant="subtitle1"
-                  sx={{ marginBottom: "5px"}}
-                >
+                <Typography variant="subtitle1" sx={{ marginBottom: "5px" }}>
                   Posts: {userPosts?.length}
                 </Typography>
 
@@ -206,7 +223,7 @@ function ProfilePage({ userName, setUserName }) {
               padding: "10px",
             }}
           >
-            {userProfile && (
+            {!loading && userProfile && (
               <Box
                 sx={{
                   height: "0.062rem",
@@ -217,9 +234,9 @@ function ProfilePage({ userName, setUserName }) {
               ></Box>
             )}
 
-            {loading && <Loading marginValue={170} />}
+            {loading && <Loading marginValue={400} />}
 
-            {userPosts && userPosts.length > 0 && (
+            {!loading && userPosts && userPosts.length > 0 && (
               <Grid container spacing={3} paddingBottom="50px">
                 {userPosts.map((post, index) => (
                   <PostItem key={index} post={post} index={index} />
@@ -227,7 +244,7 @@ function ProfilePage({ userName, setUserName }) {
               </Grid>
             )}
 
-            {!userPosts.length > 0 && !loading && (
+            {!loading && !userPosts.length > 0 && (
               <Grid container spacing={3} paddingBottom="50px">
                 <Box
                   sx={{ marginTop: "30px", textAlign: "center", width: "100%" }}

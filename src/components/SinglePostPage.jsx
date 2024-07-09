@@ -132,46 +132,26 @@ function SinglePostPage({ post, isOpen, onClose }) {
             {/* End of Comments and Likes Section */}
           </Box>
         )}
+
         <Button
           onClick={onClose}
           sx={{
-            ...(isSmallScreen && {
-              position: "absolute",
-              bottom: "20px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              background: "#3f51b5",
-              color: "#fff",
-              border: "none",
-              borderRadius: "20px",
-              padding: "10px 20px",
-              boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.1)",
-              fontWeight: "bold",
-              cursor: "pointer",
-              transition: "background 0.3s, transform 0.3s",
-              "&:hover": {
-                background: "#303f9f",
-                transform: "scale(1.1)",
-              },
-            }),
-            ...(!isSmallScreen && {
-              position: "absolute",
-              top: "95px",
-              right: "105px",
-              background: "#3f51b5",
-              color: "#fff",
-              border: "none",
-              borderRadius: "20px",
-              padding: "10px 20px",
-              boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.1)",
-              fontWeight: "bold",
-              cursor: "pointer",
-              transition: "background 0.3s, transform 0.3s",
-              "&:hover": {
-                background: "#303f9f",
-                transform: "scale(1.1)",
-              },
-            }),
+            position: "absolute",
+            top: "20px",
+            right: "20px",
+            background: "#3f51b5",
+            color: "#fff",
+            border: "none",
+            borderRadius: "20px",
+            padding: "10px 20px",
+            boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.1)",
+            fontWeight: "bold",
+            cursor: "pointer",
+            transition: "background 0.3s, transform 0.3s",
+            "&:hover": {
+              background: "#303f9f",
+              transform: "scale(1.1)",
+            },
           }}
         >
           Close
