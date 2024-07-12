@@ -1,11 +1,13 @@
 
 
-import axios from 'axios'
+// import axios from 'axios'
+
+import { privateAxios } from '../api/axios';
 
 
 export const useRefreshToken = ()=>{
     
-    axios.defaults.withCredentials = true;
+    // axios.defaults.withCredentials = true;
 
 
     const refresh = async ()=>{
@@ -14,7 +16,7 @@ export const useRefreshToken = ()=>{
 
         try{
 
-        const response = await axios.post("/auth/refresh")
+        const response = await privateAxios.post("/auth/refresh")
 
         return response
 
