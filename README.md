@@ -19,4 +19,4 @@ WebLinkUp is a dynamic social media platform built with React.js and Node.js. It
 
 1. **Clone the Repository**:
    ```sh
-   git clone https://github.com/ACtink/weblinkup.git
+   git clone https://github.com/ACtink/social-website-linkup-frontend.git
