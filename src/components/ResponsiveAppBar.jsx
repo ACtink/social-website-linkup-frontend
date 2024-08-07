@@ -69,11 +69,7 @@ const settings = [
   };
 
 
-  // React.useEffect(()=>{
-
-
-  // },[isLoggedIn ])
-
+ 
 
 
  

@@ -26,6 +26,7 @@ function SinglePostPage({ post, isOpen, onClose }) {
     >
       <Box
         sx={{
+          position: "relative",
           backgroundColor: "#fff",
           boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
           padding: "20px",
@@ -47,10 +48,10 @@ function SinglePostPage({ post, isOpen, onClose }) {
             alignItems: "center",
             overflow: "hidden",
             maxHeight: "100%", // Ensure the image does not exceed the modal's height
-            ...(isSmallScreen && { height: "50vh", margin: "auto" }), // Adjust height and center on small screens
+            ...(isSmallScreen && { height: "80vh", margin: "auto" }), // Adjust height and center on small screens
           }}
         >
-          <img
+        <img
             src={post.photoUrl}
             alt="Post"
             style={{
@@ -68,12 +69,12 @@ function SinglePostPage({ post, isOpen, onClose }) {
               padding: "0 20px",
             }}
           >
-            {/* Caption Title */}
-            <Typography variant="subtitle1" sx={{ color: "#757575" }}>
+        {/* Caption Title */}
+        <Typography variant="subtitle1" sx={{ color: "#757575" }}>
               Caption
             </Typography>
-            {/* Post Title */}
-            <Typography
+        {/* Post Title */}
+        <Typography
               variant="h6"
               sx={{
                 marginBottom: 2,
@@ -84,13 +85,11 @@ function SinglePostPage({ post, isOpen, onClose }) {
             >
               {post.title}
             </Typography>
-
-            {/* Comments and Likes Section */}
-            <Typography variant="h6" sx={{ marginBottom: 2 }}>
+        {/* Comments and Likes Section */}
+        <Typography variant="h6" sx={{ marginBottom: 2 }}>
               Comments and Likes
             </Typography>
-
-            <Box sx={{ marginTop: 2 }}>
+         <Box sx={{ marginTop: 2 }}>
               <Typography variant="subtitle1">
                 Total Likes: {post.likes}
               </Typography>
@@ -129,16 +128,14 @@ function SinglePostPage({ post, isOpen, onClose }) {
                 ))}
               </ul>
             </Box>
-            {/* End of Comments and Likes Section */}
-          </Box>
+          </Box> 
         )}
-
         <Button
           onClick={onClose}
           sx={{
             position: "absolute",
-            top: "20px",
-            right: "20px",
+            top: "-20px",
+            right: "-20px",
             background: "#3f51b5",
             color: "#fff",
             border: "none",
