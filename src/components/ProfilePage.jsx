@@ -65,8 +65,11 @@ function ProfilePage({ userName, setUserName }) {
         setYouAreAFollower(true);
       }
 
+      // Fetch posts after the profile data is successfully fetched
+      fetchUserPosts();
     } catch (error) {
       setError("Failed to fetch user profile.");
+      setLoading(false);
       return false;
     }
   };
@@ -85,36 +88,13 @@ function ProfilePage({ userName, setUserName }) {
       setError("");
     } catch (error) {
       setError("Failed to fetch user posts.");
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    async function fetchProfileData() {
-       fetchUserProfile();
-      // if (result) {
-      //   await fetchUserPosts();
-      // }
-    }
-    fetchProfileData();
+    fetchUserProfile();
   }, [user, youAreAFollower]);
-
-  useEffect(() => {
-    async function fetchPostsData() {
-       fetchUserPosts();
-      // if (result) {
-      //   await fetchUserPosts();
-      // }
-    }
-    fetchPostsData();
-  }, [user]);
-
-
-
-
-
-
-
-
 
   return (
     <Box>
@@ -244,7 +224,7 @@ function ProfilePage({ userName, setUserName }) {
               </Grid>
             )}
 
-            {!loading && !userPosts.length > 0 && (
+            {!loading && userPosts && !userPosts.length > 0 && (
               <Grid container spacing={3} paddingBottom="50px">
                 <Box
                   sx={{ marginTop: "30px", textAlign: "center", width: "100%" }}

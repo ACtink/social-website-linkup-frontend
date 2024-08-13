@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import LeftSide from "./LeftSide";
 import RightSide from "./RightSide";
 import { Box } from "@mui/material";
 import MiddleSection from "./MiddleSection";
 import Loading from "./Loading";
 import { useAxiosForToken } from "../hooks/useAxiosForToken";
+import { useLocation } from "react-router-dom";
 
 function AllPosts() {
   
@@ -18,6 +18,12 @@ function AllPosts() {
   const currentPageRef = useRef(1);
 
   const privateAxios = useAxiosForToken();
+
+
+
+
+
+
 
   const fetchPosts = async () => {
     if (loading || reachedEnd) return; // Prevent concurrent calls

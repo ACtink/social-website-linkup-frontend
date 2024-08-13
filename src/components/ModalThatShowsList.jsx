@@ -13,6 +13,11 @@ import {
 import { Link } from "react-router-dom";
 
 function ModalThatShowsList({ listData, listType, isOpen, onClose }) {
+  // Function to handle link click and close the modal
+  const handleLinkClick = () => {
+    onClose();
+  };
+
   return (
     <Modal
       open={isOpen}
@@ -24,13 +29,13 @@ function ModalThatShowsList({ listData, listType, isOpen, onClose }) {
           backgroundColor: "#fff",
           boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
           padding: "20px",
-          width: { xs: "100%", sm: "40vw" }, // Adjusted width for small screens
+          width: { xs: "100%", sm: "40vw" },
           height: "60vh",
           outline: "none",
           display: "flex",
           flexDirection: "column",
           margin: "10px",
-          borderRadius: "10px", // Small border radius
+          borderRadius: "10px",
         }}
       >
         <Typography variant="h5" sx={{ marginBottom: 2 }}>
@@ -39,7 +44,11 @@ function ModalThatShowsList({ listData, listType, isOpen, onClose }) {
         {listData && listData.length > 0 ? (
           <List style={{ flex: "1", overflowY: "auto" }}>
             {listData.map((item, index) => (
-              <Link key={index} to={`/profile/${item.author?.username}`}>
+              <Link
+                key={index}
+                to={`/profile/${item.author ? item.author.username : item.username}`}
+                onClick={handleLinkClick}
+              >
                 <ListItem
                   sx={{
                     borderBottom: "1px solid #ccc",
